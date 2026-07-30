@@ -1,0 +1,44 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# build
+dist/
+build/
+.vite/
+*.tsbuildinfo
+
+# uploads
+apps/api/uploads/
+uploads/
+
+# logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# runtime
+.pm2/
+coverage/
+.nyc_output/
+
+# editor / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# expo (keyingi bosqich)
+.expo/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
