@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-white text-gray-900 antialiased;
+    font-family: theme('fontFamily.sans');
+  }
+  /* Mobil Safari'da input'ga bosilganda zoom bo'lmasligi uchun */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
