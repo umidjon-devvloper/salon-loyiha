@@ -8,6 +8,20 @@ import { toHHMM } from '@gozal/shared/utils/time';
 
 const img = (name, folder = 'salons') => (name ? `/uploads/${folder}/${name}` : null);
 
+/**
+ * TOP faolmi? `expireTop` cron kuniga bir marta (00:05) ishlaydi, ya'ni muddati
+ * tugagan salon bir sutkagacha TOP bo'lib turishi mumkin. TOP — pullik xizmat,
+ * shuning uchun ko'rsatishdan oldin muddat qayta tekshiriladi.
+ *
+ * ⚠️ Saralash baribir `isTop` maydoniga tayanadi — cron ishlagunicha muddati
+ * tugagan salon ro'yxat boshida turadi, lekin belgisi ko'rinmaydi.
+ */
+export function isTopActive(s, now = new Date()) {
+  if (!s?.isTop) return false;
+  if (!s.topUntil) return true;
+  return new Date(s.topUntil).getTime() > now.getTime();
+}
+
 export function serializeCategory(c) {
   return {
     id: String(c._id),
@@ -41,7 +55,7 @@ export function serializeSalonCard(s) {
     district: s.district,
     rating: s.rating,
     reviewCount: s.reviewCount,
-    isTop: s.isTop,
+    isTop: isTopActive(s),
     isVerified: s.isVerified,
     minPrice: s.minPrice,
     maxPrice: s.maxPrice,

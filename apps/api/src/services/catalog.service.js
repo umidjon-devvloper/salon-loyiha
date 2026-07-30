@@ -15,12 +15,18 @@ import {
 /** Katalogda FAQAT tasdiqlangan salonlar ko'rinadi — hamma joyda shu filtr */
 const ACTIVE = { status: SALON_STATUS.ACTIVE };
 
+/**
+ * `_id` HAR BIR saralashda oxirgi mezon.
+ * Busiz teng qiymatlarda (yangi salonlarning hammasida rating = 0) Mongo tartibni
+ * kafolatlamaydi: bir salon 1- va 2-sahifada ikki marta chiqib, boshqasi umuman
+ * ko'rinmay qolishi mumkin.
+ */
 const SORTS = {
-  top: { isTop: -1, rating: -1, createdAt: -1 },
-  price_asc: { minPrice: 1, rating: -1 },
-  price_desc: { minPrice: -1, rating: -1 },
-  rating: { rating: -1, reviewCount: -1 },
-  new: { createdAt: -1 },
+  top: { isTop: -1, rating: -1, createdAt: -1, _id: -1 },
+  price_asc: { minPrice: 1, rating: -1, _id: -1 },
+  price_desc: { minPrice: -1, rating: -1, _id: -1 },
+  rating: { rating: -1, reviewCount: -1, _id: -1 },
+  new: { createdAt: -1, _id: -1 },
 };
 
 // ── Kategoriyalar ───────────────────────────────────────────────
@@ -49,7 +55,7 @@ export function listCities() {
 
 // ── Salonlar ────────────────────────────────────────────────────
 
-async function buildSalonFilter(query) {
+export async function buildSalonFilter(query) {
   const { minPrice, maxPrice } = normalizePriceRange(query);
   const filter = { ...ACTIVE };
 
@@ -66,7 +72,9 @@ async function buildSalonFilter(query) {
     // Salonda so'ralgan oraliqqa tushadigan xizmat bo'lishi kerak:
     // eng arzoni <= maxPrice VA eng qimmati >= minPrice
     if (maxPrice !== undefined) filter.minPrice = { $lte: maxPrice };
-    if (minPrice !== undefined) filter.maxPrice = { $gte: minPrice };
+    filter.maxPrice = { ...(minPrice !== undefined ? { $gte: minPrice } : {}), $gt: 0 };
+    // Xizmati yo'q salonda minPrice = maxPrice = 0 va u har qanday "N gacha"
+    // filtriga tushib qoladi — katalogda "0 so'mlik" salon paydo bo'ladi.
   }
 
   if (query.q) filter.name = searchRegex(query.q);
@@ -81,7 +89,8 @@ export async function listSalons(query) {
     page: query.page,
     limit: query.limit,
     sort: SORTS[query.sort] || SORTS.top,
-    select: 'name slug cover city district rating reviewCount isTop isVerified minPrice maxPrice categories',
+    select:
+      'name slug cover city district rating reviewCount isTop topUntil isVerified minPrice maxPrice categories',
     populate: { path: 'categories', select: 'slug name.uz' },
   });
 
@@ -142,8 +151,14 @@ export async function listMasters(query) {
   const salons = await Salon.find(salonFilter).select('_id').lean();
   const salonIds = salons.map((s) => s._id);
 
-  const filter = { isActive: true, salon: { $in: salonIds } };
-  if (query.salon) filter.salon = query.salon;
+  // ⚠️ `filter.salon = query.salon` deb yozilsa faol salonlar ro'yxati ALMASHADI va
+  // bloklangan/tasdiqlanmagan salon ustalari ochiq API'da ko'rinib qoladi.
+  // Shuning uchun kesishma olinadi.
+  const scoped = query.salon
+    ? salonIds.filter((id) => String(id) === String(query.salon))
+    : salonIds;
+
+  const filter = { isActive: true, salon: { $in: scoped } };
   if (query.q) filter.fullName = searchRegex(query.q);
 
   const { items, meta } = await paginate(Master, filter, {
@@ -200,7 +215,9 @@ export async function search({ q, city, limit }) {
     Salon.find({ ...salonFilter, name: rx })
       .sort(SORTS.top)
       .limit(limit)
-      .select('name slug cover city district rating reviewCount isTop isVerified minPrice maxPrice')
+      .select(
+        'name slug cover city district rating reviewCount isTop topUntil isVerified minPrice maxPrice',
+      )
       .lean(),
 
     Master.find({ isActive: true, salon: { $in: salonIds }, fullName: rx })
@@ -224,9 +241,7 @@ export async function search({ q, city, limit }) {
     masters: masters.map(serializeMasterCard),
     services: services.map((s) => ({
       ...serializeService(s),
-      salon: s.salon
-        ? { id: String(s.salon._id), name: s.salon.name, slug: s.salon.slug }
-        : null,
+      salon: s.salon ? { id: String(s.salon._id), name: s.salon.name, slug: s.salon.slug } : null,
     })),
     total: salons.length + masters.length + services.length,
   };
@@ -238,11 +253,13 @@ export async function listTopSalons(limit = 8) {
   const salons = await Salon.find(ACTIVE)
     .sort(SORTS.top)
     .limit(limit)
-    .select('name slug cover city district rating reviewCount isTop isVerified minPrice maxPrice categories')
+    .select(
+      'name slug cover city district rating reviewCount isTop topUntil isVerified minPrice maxPrice categories',
+    )
     .populate({ path: 'categories', select: 'slug name.uz' })
     .lean();
 
   return salons.map(serializeSalonCard);
 }
 
-export { metaOf, skipOf };
+export { metaOf, skipOf, SORTS };
