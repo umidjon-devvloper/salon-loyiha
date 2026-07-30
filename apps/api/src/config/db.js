@@ -11,7 +11,7 @@ if (env.isDev) {
 export async function connectDB() {
   try {
     await mongoose.connect(env.MONGO_URI, {
-      serverSelectionTimeoutMS: 10_000,
+      serverSelectionTimeoutMS: 5_000,
       maxPoolSize: 20,
     });
     const { host, name } = mongoose.connection;

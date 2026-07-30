@@ -2,6 +2,7 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import { ok } from '../utils/response.js';
 import authRoutes from './auth.routes.js';
+import publicRoutes from './public.routes.js';
 
 const router = Router();
 
@@ -15,8 +16,11 @@ router.get('/health', (req, res) =>
 
 router.use('/auth', authRoutes);
 
+// ⚠️ Katalog oxirida turadi: uning '/:slug' kabi keng route'lari
+// yuqoridagi aniq yo'llarni "yutib yubormasligi" kerak
+router.use('/', publicRoutes);
+
 // Keyingi bloklarda ulanadi:
-// router.use('/', publicRoutes);
 // router.use('/bookings', bookingRoutes);
 // router.use('/owner', ownerRoutes);
 // router.use('/admin', adminRoutes);
