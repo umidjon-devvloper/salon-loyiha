@@ -13,7 +13,6 @@ export function notFoundHandler(req, _res, next) {
  * Yagona xato formati:
  * { success: false, message, code, errors? }
  */
-// eslint-disable-next-line no-unused-vars
 export function errorHandler(err, req, res, _next) {
   let status = 500;
   let message = 'Serverda xatolik yuz berdi';

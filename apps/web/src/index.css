@@ -6,14 +6,31 @@
   html {
     -webkit-tap-highlight-color: transparent;
   }
+
   body {
     @apply bg-white text-gray-900 antialiased;
     font-family: theme('fontFamily.sans');
   }
-  /* Mobil Safari'da input'ga bosilganda zoom bo'lmasligi uchun */
+
+  /* Mobil Safari'da input'ga bosilganda sahifa zoom bo'lib ketmasligi uchun */
   input,
   select,
   textarea {
     font-size: 16px;
+  }
+
+  /* Klaviatura bilan yuradigan foydalanuvchi fokusni ko'rishi shart */
+  :focus-visible {
+    @apply outline-brand-500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
