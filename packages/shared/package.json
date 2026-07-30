@@ -12,7 +12,7 @@
     "./api/*": "./src/api/*.js"
   },
   "scripts": {
-    "test": "node --test src/**/*.test.js"
+    "test": "node --test"
   },
   "dependencies": {
     "zod": "^3.23.8"

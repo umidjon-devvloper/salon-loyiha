@@ -238,7 +238,9 @@ frontend/
 - Parol `bcrypt` (10 round) bilan hashlanadi, hech qachon javobda qaytmaydi
 - Access token 15 daqiqa, refresh token 30 kun (httpOnly cookie yoki localStorage — v1 da localStorage yetarli)
 - `/api/auth/login` va `/register` ga rate limit: 10 so'rov / 15 daqiqa / IP
-- Barcha `body` zod bilan validatsiya qilinadi, `mongo-sanitize` NoSQL injection uchun
+- Barcha `body` zod bilan validatsiya qilinadi
+- NoSQL injection: **o'z middleware'imiz** — `middleware/sanitize.js`. `$` bilan boshlanuvchi va `.` bor kalitlar `body`, `params`, `query` dan o'chiriladi.
+  > `express-mongo-sanitize` ishlatilmaydi: u Express 5 da sinadi (`req.query` faqat getter bo'lib qolgan, paket esa uni qayta tayinlaydi) va 2+ yildan beri yangilanmagan. Bizniki obyektni qayta tayinlamaydi, faqat kalitlarni o'chiradi — Express 4 va 5 da bir xil ishlaydi.
 - Rasm yuklashda: faqat `image/jpeg|png|webp`, max 5 MB, `sharp` bilan qayta yoziladi (EXIF tozalanadi)
 - `helmet`, `cors` faqat `CLIENT_URL` uchun
 - Telefon raqam formati: `+998XXXXXXXXX` — bazaga normallashtirilgan holda yoziladi

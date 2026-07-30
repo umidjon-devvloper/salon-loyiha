@@ -8,7 +8,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "seed": "node src/seed/index.js",
-    "test": "node --test \"src/**/*.test.js\""
+    "test": "node --test"
   },
   "dependencies": {
     "@gozal/shared": "workspace:*",
