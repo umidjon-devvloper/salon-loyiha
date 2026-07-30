@@ -29,9 +29,7 @@ export function isValidDateStr(value) {
   const [y, m, d] = value.split('-').map(Number);
   if (m < 1 || m > 12 || d < 1 || d > 31) return false;
   const dt = new Date(Date.UTC(y, m - 1, d));
-  return (
-    dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d
-  );
+  return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
 }
 
 /** '2026-08' formatimi? */

@@ -18,7 +18,7 @@ export const authLimiter = rateLimit({
   ...base,
   windowMs: 15 * 60 * 1000,
   limit: 10,
-  handler: jsonHandler('Juda ko\'p urinish. 15 daqiqadan keyin qayta urinib ko\'ring'),
+  handler: jsonHandler("Juda ko'p urinish. 15 daqiqadan keyin qayta urinib ko'ring"),
 });
 
 /** Yozuv yaratish: 20 / soat / IP */
@@ -26,7 +26,7 @@ export const bookingLimiter = rateLimit({
   ...base,
   windowMs: 60 * 60 * 1000,
   limit: 20,
-  handler: jsonHandler('Juda ko\'p yozuv. Bir ozdan keyin qayta urinib ko\'ring'),
+  handler: jsonHandler("Juda ko'p yozuv. Bir ozdan keyin qayta urinib ko'ring"),
 });
 
 /** Umumiy API chegarasi */
@@ -34,5 +34,5 @@ export const apiLimiter = rateLimit({
   ...base,
   windowMs: 60 * 1000,
   limit: 300,
-  handler: jsonHandler('Juda ko\'p so\'rov. Bir ozdan keyin qayta urinib ko\'ring'),
+  handler: jsonHandler("Juda ko'p so'rov. Bir ozdan keyin qayta urinib ko'ring"),
 });

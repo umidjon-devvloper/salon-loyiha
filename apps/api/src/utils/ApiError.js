@@ -24,7 +24,7 @@ export class ApiError extends Error {
     return new ApiError(401, message, code);
   }
 
-  static forbidden(message = 'Ruxsat yo\'q', code = ERROR_CODES.FORBIDDEN) {
+  static forbidden(message = "Ruxsat yo'q", code = ERROR_CODES.FORBIDDEN) {
     return new ApiError(403, message, code);
   }
 
@@ -36,7 +36,7 @@ export class ApiError extends Error {
     return new ApiError(409, message, code);
   }
 
-  static tooMany(message = 'Juda ko\'p so\'rov', code = ERROR_CODES.RATE_LIMITED) {
+  static tooMany(message = "Juda ko'p so'rov", code = ERROR_CODES.RATE_LIMITED) {
     return new ApiError(429, message, code);
   }
 

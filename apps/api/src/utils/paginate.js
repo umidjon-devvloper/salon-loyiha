@@ -29,7 +29,11 @@ export function metaOf({ page, limit, total }) {
  * Ro'yxat + hisob bitta joyda. `count` va `find` PARALLEL ketadi.
  * @param {import('mongoose').Model} Model
  */
-export async function paginate(Model, filter, { page, limit, sort, select, populate, lean = true }) {
+export async function paginate(
+  Model,
+  filter,
+  { page, limit, sort, select, populate, lean = true },
+) {
   let query = Model.find(filter).sort(sort).skip(skipOf({ page, limit })).limit(limit);
 
   if (select) query = query.select(select);

@@ -33,7 +33,7 @@ const build = (count = 20) =>
   buildDemoBookings({ today: '2026-08-05', masters, servicesBySalon, count });
 
 describe('buildDemoBookings', () => {
-  test('so\'ralgan sondan oshmaydi va bo\'sh qolmaydi', () => {
+  test("so'ralgan sondan oshmaydi va bo'sh qolmaydi", () => {
     const b = build(20);
     assert.ok(b.length > 0, 'kamida bitta yozuv yasalishi kerak');
     assert.ok(b.length <= 20);
@@ -46,7 +46,11 @@ describe('buildDemoBookings', () => {
       const list = byMasterDay.get(key) || [];
       for (const other of list) {
         const overlap = b.startMin < other.end && other.start < b.endMin;
-        assert.equal(overlap, false, `kesishish: ${key} ${b.startMin}-${b.endMin} vs ${other.start}-${other.end}`);
+        assert.equal(
+          overlap,
+          false,
+          `kesishish: ${key} ${b.startMin}-${b.endMin} vs ${other.start}-${other.end}`,
+        );
       }
       list.push({ start: b.startMin, end: b.endMin });
       byMasterDay.set(key, list);
@@ -92,7 +96,7 @@ describe('buildDemoBookings', () => {
     }
   });
 
-  test('o\'tgan sanaga yozuv yasamaydi', () => {
+  test("o'tgan sanaga yozuv yasamaydi", () => {
     for (const b of build(20)) assert.ok(b.date > '2026-08-05');
   });
 
@@ -102,15 +106,22 @@ describe('buildDemoBookings', () => {
     assert.ok(b.some((x) => x.source === 'manual'));
   });
 
-  test('hamma kun yopiq bo\'lsa — bo\'sh massiv, xato emas', () => {
-    const closed = [{ id: 'm9', salonId: 's1', workingHours: workingHours.map((d) => ({ ...d, isOpen: false })) }];
-    const b = buildDemoBookings({ today: '2026-08-05', masters: closed, servicesBySalon, count: 5 });
+  test("hamma kun yopiq bo'lsa — bo'sh massiv, xato emas", () => {
+    const closed = [
+      { id: 'm9', salonId: 's1', workingHours: workingHours.map((d) => ({ ...d, isOpen: false })) },
+    ];
+    const b = buildDemoBookings({
+      today: '2026-08-05',
+      masters: closed,
+      servicesBySalon,
+      count: 5,
+    });
     assert.deepEqual(b, []);
   });
 });
 
 describe('uniqueSlug', () => {
-  test('takrorlanganda raqam qo\'shiladi', () => {
+  test("takrorlanganda raqam qo'shiladi", () => {
     const existing = new Set();
     assert.equal(uniqueSlug('Lotus Beauty', existing), 'lotus-beauty');
     assert.equal(uniqueSlug('Lotus Beauty', existing), 'lotus-beauty-2');
@@ -122,11 +133,17 @@ describe('uniqueSlug', () => {
   });
 });
 
-describe('DEMO_SALONS ma\'lumoti', () => {
+describe("DEMO_SALONS ma'lumoti", () => {
   test('5 salon, 12 usta, 40 xizmat', () => {
     assert.equal(DEMO_SALONS.length, 5);
-    assert.equal(DEMO_SALONS.reduce((s, x) => s + x.masters.length, 0), 12);
-    assert.equal(DEMO_SALONS.reduce((s, x) => s + x.services.length, 0), 40);
+    assert.equal(
+      DEMO_SALONS.reduce((s, x) => s + x.masters.length, 0),
+      12,
+    );
+    assert.equal(
+      DEMO_SALONS.reduce((s, x) => s + x.services.length, 0),
+      40,
+    );
   });
 
   test('har bir xizmatda davomiylik bor va 10 daqiqadan katta', () => {

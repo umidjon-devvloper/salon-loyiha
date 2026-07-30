@@ -1,6 +1,6 @@
 /** Boshlang'ich 12 kategoriya (02-database.md dagi jadval) */
 export const CATEGORIES = [
-  { slug: 'gozallik-salonlari', uz: 'Go\'zallik salonlari', ru: 'Салоны красоты', icon: 'sparkles' },
+  { slug: 'gozallik-salonlari', uz: "Go'zallik salonlari", ru: 'Салоны красоты', icon: 'sparkles' },
   { slug: 'manikyur', uz: 'Manikyur', ru: 'Маникюр', icon: 'hand' },
   { slug: 'pedikyur', uz: 'Pedikyur', ru: 'Педикюр', icon: 'footprints' },
   { slug: 'depilatsiya', uz: 'Depilatsiya', ru: 'Депиляция', icon: 'wand' },

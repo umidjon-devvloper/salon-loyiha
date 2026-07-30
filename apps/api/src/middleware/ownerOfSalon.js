@@ -20,7 +20,7 @@ export async function ownerOfSalon(req, _res, next) {
     // Admin istalgan salonni ko'ra oladi: ?salonId=... yoki :salonId
     if (req.user.role === ROLES.ADMIN) {
       const id = req.params.salonId || req.query.salonId;
-      if (!id) return next(ApiError.badRequest('salonId ko\'rsatilmagan'));
+      if (!id) return next(ApiError.badRequest("salonId ko'rsatilmagan"));
       const salon = await Salon.findById(id);
       if (!salon) return next(ApiError.notFound('Salon topilmadi'));
       req.salon = salon;
@@ -29,9 +29,7 @@ export async function ownerOfSalon(req, _res, next) {
 
     const salon = await Salon.findOne({ owner: req.user.id });
     if (!salon) {
-      return next(
-        ApiError.notFound('Sizda hali salon yaratilmagan', ERROR_CODES.NOT_FOUND),
-      );
+      return next(ApiError.notFound('Sizda hali salon yaratilmagan', ERROR_CODES.NOT_FOUND));
     }
 
     if (String(salon.owner) !== String(req.user.id)) {

@@ -30,7 +30,7 @@ import {
 } from './time.js';
 
 describe('toMin / toHHMM', () => {
-  test('konvertatsiya to\'g\'ri', () => {
+  test("konvertatsiya to'g'ri", () => {
     assert.equal(toMin('00:00'), 0);
     assert.equal(toMin('09:30'), 570);
     assert.equal(toMin('13:00'), 780);
@@ -52,7 +52,7 @@ describe('toMin / toHHMM', () => {
     }
   });
 
-  test('noto\'g\'ri qiymatda xato tashlaydi', () => {
+  test("noto'g'ri qiymatda xato tashlaydi", () => {
     assert.throws(() => toMin('9:30'), TypeError); // 0 yo'q
     assert.throws(() => toMin('25:00'), TypeError);
     assert.throws(() => toMin('09:60'), TypeError);
@@ -65,7 +65,7 @@ describe('toMin / toHHMM', () => {
 });
 
 describe('Toshkent vaqt zonasi (eng xatarli qism)', () => {
-  test('UTC kuni o\'tmagan, Toshkentda o\'tgan — kun surilmaydi', () => {
+  test("UTC kuni o'tmagan, Toshkentda o'tgan — kun surilmaydi", () => {
     // 05-avgust 19:30 UTC  =  06-avgust 00:30 Toshkentda
     const now = new Date('2026-08-05T19:30:00Z');
     assert.equal(todayStr(now), '2026-08-06');
@@ -98,7 +98,7 @@ describe('Toshkent vaqt zonasi (eng xatarli qism)', () => {
     assert.equal(tomorrowStr(new Date('2026-08-31T06:00:00Z')), '2026-09-01');
   });
 
-  test('parametrsiz chaqiruv to\'g\'ri formatda qaytaradi', () => {
+  test("parametrsiz chaqiruv to'g'ri formatda qaytaradi", () => {
     assert.match(todayStr(), /^\d{4}-\d{2}-\d{2}$/);
     const n = nowMin();
     assert.ok(Number.isInteger(n) && n >= 0 && n < 1440);
@@ -119,7 +119,7 @@ describe('weekdayOf', () => {
 });
 
 describe('addDays / diffDays', () => {
-  test('oddiy qo\'shish', () => {
+  test("oddiy qo'shish", () => {
     assert.equal(addDays('2026-08-05', 3), '2026-08-08');
     assert.equal(addDays('2026-08-05', 0), '2026-08-05');
     assert.equal(addDays('2026-08-05', -5), '2026-07-31');
@@ -159,7 +159,7 @@ describe('compareDates / isPastDate / isToday', () => {
     assert.ok('2026-09-01' > '2026-08-31');
   });
 
-  test('o\'tgan kun aniqlanadi', () => {
+  test("o'tgan kun aniqlanadi", () => {
     const now = new Date('2026-08-05T06:00:00Z'); // Toshkentda 05-avgust 11:00
     assert.equal(isPastDate('2026-08-04', now), true);
     assert.equal(isPastDate('2026-08-05', now), false);
@@ -253,14 +253,14 @@ describe('validatsiya', () => {
     assert.equal(isValidTimeStr('9:30'), false);
   });
 
-  test('noto\'g\'ri sanada funksiyalar xato tashlaydi', () => {
+  test("noto'g'ri sanada funksiyalar xato tashlaydi", () => {
     assert.throws(() => weekdayOf('2026-02-30'), TypeError);
     assert.throws(() => addDays('kecha', 1), TypeError);
     assert.throws(() => daysInMonth('2026-13'), TypeError);
   });
 });
 
-describe('o\'zbekcha formatlash', () => {
+describe("o'zbekcha formatlash", () => {
   test('formatDateUz', () => {
     assert.equal(formatDateUz('2026-08-05'), '5-avgust, chorshanba');
     assert.equal(formatDateUz('2026-01-01'), '1-yanvar, payshanba');

@@ -12,7 +12,7 @@ import {
 const firstError = (result) => result.error.issues[0].message;
 
 describe('registerSchema', () => {
-  test('telefon har xil ko\'rinishda kelsa ham normallashadi', () => {
+  test("telefon har xil ko'rinishda kelsa ham normallashadi", () => {
     for (const phone of ['901234567', '90 123 45 67', '+998901234567', '+998 (90) 123-45-67']) {
       const r = registerSchema.safeParse({ phone, password: 'parol123', fullName: 'Dildora' });
       assert.ok(r.success, `${phone} qabul qilinishi kerak`);
@@ -20,8 +20,12 @@ describe('registerSchema', () => {
     }
   });
 
-  test('rol berilmasa client bo\'ladi', () => {
-    const r = registerSchema.parse({ phone: '901234567', password: 'parol123', fullName: 'Dildora' });
+  test("rol berilmasa client bo'ladi", () => {
+    const r = registerSchema.parse({
+      phone: '901234567',
+      password: 'parol123',
+      fullName: 'Dildora',
+    });
     assert.equal(r.role, 'client');
   });
 
@@ -35,7 +39,7 @@ describe('registerSchema', () => {
     assert.equal(r.role, 'owner');
   });
 
-  test('⭐ admin rolini ro\'yxatdan o\'tishda tanlab BO\'LMAYDI', () => {
+  test("⭐ admin rolini ro'yxatdan o'tishda tanlab BO'LMAYDI", () => {
     const r = registerSchema.safeParse({
       phone: '901234567',
       password: 'parol123',
@@ -45,20 +49,31 @@ describe('registerSchema', () => {
     assert.equal(r.success, false);
   });
 
-  test('noto\'g\'ri telefon rad etiladi', () => {
+  test("noto'g'ri telefon rad etiladi", () => {
     for (const phone of ['12345', '+79001234567', '', 'telefon']) {
-      assert.equal(registerSchema.safeParse({ phone, password: 'parol123', fullName: 'A B' }).success, false);
+      assert.equal(
+        registerSchema.safeParse({ phone, password: 'parol123', fullName: 'A B' }).success,
+        false,
+      );
     }
   });
 
-  test('qisqa parol rad etiladi, xabari o\'zbekcha', () => {
-    const r = registerSchema.safeParse({ phone: '901234567', password: '123', fullName: 'Dildora' });
+  test("qisqa parol rad etiladi, xabari o'zbekcha", () => {
+    const r = registerSchema.safeParse({
+      phone: '901234567',
+      password: '123',
+      fullName: 'Dildora',
+    });
     assert.equal(r.success, false);
     assert.match(firstError(r), /kamida 6 belgi/);
   });
 
   test('ism trim qilinadi', () => {
-    const r = registerSchema.parse({ phone: '901234567', password: 'parol123', fullName: '  Dildora  ' });
+    const r = registerSchema.parse({
+      phone: '901234567',
+      password: 'parol123',
+      fullName: '  Dildora  ',
+    });
     assert.equal(r.fullName, 'Dildora');
   });
 });
@@ -69,7 +84,7 @@ describe('loginSchema', () => {
     assert.equal(r.phone, '+998901234567');
   });
 
-  test('login\'da parol uzunligi tekshirilmaydi (faqat bo\'shligi)', () => {
+  test("login'da parol uzunligi tekshirilmaydi (faqat bo'shligi)", () => {
     // Eski, qisqa parolli foydalanuvchilar kira olishi kerak
     assert.equal(loginSchema.safeParse({ phone: '901234567', password: '12' }).success, true);
     assert.equal(loginSchema.safeParse({ phone: '901234567', password: '' }).success, false);
@@ -81,25 +96,29 @@ describe('updateMeSchema', () => {
     assert.equal(updateMeSchema.safeParse({ fullName: 'Nargiza' }).success, true);
   });
 
-  test('bo\'sh obyekt rad etiladi', () => {
+  test("bo'sh obyekt rad etiladi", () => {
     assert.equal(updateMeSchema.safeParse({}).success, false);
   });
 
-  test('avatar null bo\'lishi mumkin (rasmni o\'chirish)', () => {
+  test("avatar null bo'lishi mumkin (rasmni o'chirish)", () => {
     assert.equal(updateMeSchema.safeParse({ avatar: null }).success, true);
   });
 });
 
 describe('changePasswordSchema', () => {
-  test('to\'g\'ri kirish', () => {
+  test("to'g'ri kirish", () => {
     assert.equal(
-      changePasswordSchema.safeParse({ currentPassword: 'eski123', newPassword: 'yangi123' }).success,
+      changePasswordSchema.safeParse({ currentPassword: 'eski123', newPassword: 'yangi123' })
+        .success,
       true,
     );
   });
 
-  test('yangi parol eskisi bilan bir xil bo\'lolmaydi', () => {
-    const r = changePasswordSchema.safeParse({ currentPassword: 'parol123', newPassword: 'parol123' });
+  test("yangi parol eskisi bilan bir xil bo'lolmaydi", () => {
+    const r = changePasswordSchema.safeParse({
+      currentPassword: 'parol123',
+      newPassword: 'parol123',
+    });
     assert.equal(r.success, false);
     assert.match(firstError(r), /farq qilishi/);
   });
@@ -114,8 +133,14 @@ describe('changePasswordSchema', () => {
 
 describe('pushTokenSchema', () => {
   test('platform faqat ios yoki android', () => {
-    assert.equal(pushTokenSchema.safeParse({ token: 'a'.repeat(20), platform: 'ios' }).success, true);
-    assert.equal(pushTokenSchema.safeParse({ token: 'a'.repeat(20), platform: 'web' }).success, false);
+    assert.equal(
+      pushTokenSchema.safeParse({ token: 'a'.repeat(20), platform: 'ios' }).success,
+      true,
+    );
+    assert.equal(
+      pushTokenSchema.safeParse({ token: 'a'.repeat(20), platform: 'web' }).success,
+      false,
+    );
   });
 
   test('deviceId ixtiyoriy', () => {

@@ -34,10 +34,10 @@ describe('narx', () => {
   test('formatServicePrice — uchala holat', () => {
     assert.equal(formatServicePrice({ price: 100000 }), "100 000 so'm");
     assert.equal(formatServicePrice({ price: 100000, isPriceFrom: true }), "100 000 so'mdan");
-    assert.equal(formatServicePrice({ price: 100000, priceTo: 180000 }), '100 000 – 180 000 so\'m');
+    assert.equal(formatServicePrice({ price: 100000, priceTo: 180000 }), "100 000 – 180 000 so'm");
   });
 
-  test('priceTo price dan kichik bo\'lsa e\'tiborga olinmaydi', () => {
+  test("priceTo price dan kichik bo'lsa e'tiborga olinmaydi", () => {
     assert.equal(formatServicePrice({ price: 100000, priceTo: 90000 }), "100 000 so'm");
   });
 });
@@ -52,7 +52,7 @@ describe('telefon', () => {
     assert.equal(normalizePhone('+998 (90) 123-45-67'), expected);
   });
 
-  test('noto\'g\'ri raqamlar null', () => {
+  test("noto'g'ri raqamlar null", () => {
     assert.equal(normalizePhone('12345'), null);
     assert.equal(normalizePhone('+7 900 123 45 67'), null); // 998 emas
     assert.equal(normalizePhone(''), null);
@@ -65,7 +65,7 @@ describe('telefon', () => {
     assert.equal(isValidPhone('123'), false);
   });
 
-  test('formatPhone — ko\'rsatish uchun', () => {
+  test("formatPhone — ko'rsatish uchun", () => {
     assert.equal(formatPhone('+998901234567'), '+998 90 123 45 67');
     assert.equal(formatPhone('901234567'), '+998 90 123 45 67');
   });

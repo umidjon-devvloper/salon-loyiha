@@ -1,5 +1,4 @@
-node_modules
-dist
-build
+# Loyiha hujjatlari qo'lda formatlangan — jadval va sxemalar buzilmasin
+docs/
 pnpm-lock.yaml
-apps/api/uploads
+*.md

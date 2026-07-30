@@ -111,7 +111,8 @@ export default function LoginPage() {
         </p>
 
         <p className="mt-3 text-center text-xs text-gray-400">
-          Parolni unutdingizmi? Administratorga murojaat qiling — SMS orqali tiklash hozircha yo&apos;q.
+          Parolni unutdingizmi? Administratorga murojaat qiling — SMS orqali tiklash hozircha
+          yo&apos;q.
         </p>
       </div>
     </Container>

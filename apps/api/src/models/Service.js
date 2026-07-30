@@ -32,7 +32,7 @@ serviceSchema.index({ name: 'text' });
 
 serviceSchema.pre('validate', function () {
   if (this.priceTo !== null && this.priceTo !== undefined && this.priceTo <= this.price) {
-    throw new Error('Yuqori narx quyi narxdan katta bo\'lishi kerak');
+    throw new Error("Yuqori narx quyi narxdan katta bo'lishi kerak");
   }
 });
 

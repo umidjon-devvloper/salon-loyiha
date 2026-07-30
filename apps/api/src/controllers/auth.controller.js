@@ -39,7 +39,7 @@ export const updateMe = asyncHandler(async (req, res) => {
 
 export const changePassword = asyncHandler(async (req, res) => {
   await authService.changePassword(req.user.id, req.body);
-  ok(res, { message: 'Parol o\'zgartirildi. Barcha qurilmalardan chiqildi' });
+  ok(res, { message: "Parol o'zgartirildi. Barcha qurilmalardan chiqildi" });
 });
 
 export const savePushToken = asyncHandler(async (req, res) => {

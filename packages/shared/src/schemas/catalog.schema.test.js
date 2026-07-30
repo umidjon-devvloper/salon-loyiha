@@ -11,37 +11,37 @@ import {
 } from './catalog.schema.js';
 
 describe('salonListSchema', () => {
-  test('bo\'sh query — standart qiymatlar', () => {
+  test("bo'sh query — standart qiymatlar", () => {
     const r = salonListSchema.parse({});
     assert.equal(r.page, 1);
     assert.equal(r.limit, 20);
     assert.equal(r.sort, 'top');
   });
 
-  test('URL params string bo\'ladi — songa o\'giriladi', () => {
+  test("URL params string bo'ladi — songa o'giriladi", () => {
     const r = salonListSchema.parse({ page: '3', limit: '12', minPrice: '50000' });
     assert.equal(r.page, 3);
     assert.equal(r.limit, 12);
     assert.equal(r.minPrice, 50000);
   });
 
-  test('limit 50 dan oshmaydi (bir so\'rovda butun bazani so\'rab bo\'lmaydi)', () => {
+  test("limit 50 dan oshmaydi (bir so'rovda butun bazani so'rab bo'lmaydi)", () => {
     assert.equal(salonListSchema.safeParse({ limit: '500' }).success, false);
   });
 
-  test('page 0 yoki manfiy bo\'lolmaydi', () => {
+  test("page 0 yoki manfiy bo'lolmaydi", () => {
     assert.equal(salonListSchema.safeParse({ page: '0' }).success, false);
     assert.equal(salonListSchema.safeParse({ page: '-1' }).success, false);
   });
 
-  test('noma\'lum sort rad etiladi', () => {
+  test("noma'lum sort rad etiladi", () => {
     assert.equal(salonListSchema.safeParse({ sort: 'random' }).success, false);
     for (const s of SALON_SORTS) {
       assert.equal(salonListSchema.safeParse({ sort: s }).success, true, s);
     }
   });
 
-  test('kategoriya slug kichik harfga o\'giriladi', () => {
+  test("kategoriya slug kichik harfga o'giriladi", () => {
     assert.equal(salonListSchema.parse({ category: 'Manikyur' }).category, 'manikyur');
   });
 
@@ -51,21 +51,21 @@ describe('salonListSchema', () => {
 });
 
 describe('normalizePriceRange', () => {
-  test('teskari oraliq to\'g\'rilanadi', () => {
+  test("teskari oraliq to'g'rilanadi", () => {
     assert.deepEqual(normalizePriceRange({ minPrice: 200000, maxPrice: 50000 }), {
       minPrice: 50000,
       maxPrice: 200000,
     });
   });
 
-  test('to\'g\'ri oraliq o\'zgarmaydi', () => {
+  test("to'g'ri oraliq o'zgarmaydi", () => {
     assert.deepEqual(normalizePriceRange({ minPrice: 50000, maxPrice: 200000 }), {
       minPrice: 50000,
       maxPrice: 200000,
     });
   });
 
-  test('bittasi bo\'lmasa tegilmaydi', () => {
+  test("bittasi bo'lmasa tegilmaydi", () => {
     assert.deepEqual(normalizePriceRange({ minPrice: 50000 }), {
       minPrice: 50000,
       maxPrice: undefined,

@@ -33,7 +33,7 @@ export const masterListSchema = paginationSchema.extend({
 
 export const searchSchema = z.object({
   q: z
-    .string({ required_error: 'Qidiruv so\'zi kiritilishi shart' })
+    .string({ required_error: "Qidiruv so'zi kiritilishi shart" })
     .trim()
     .min(2, 'Kamida 2 ta belgi kiriting')
     .max(80),
@@ -46,7 +46,7 @@ export const slugParamSchema = z.object({
 });
 
 export const idParamSchema = z.object({
-  id: z.string().regex(/^[a-f\d]{24}$/i, 'Noto\'g\'ri identifikator'),
+  id: z.string().regex(/^[a-f\d]{24}$/i, "Noto'g'ri identifikator"),
 });
 
 /** Narx oralig'i teskari bo'lsa (min > max) — foydalanuvchi xatosi, tuzatib beramiz */

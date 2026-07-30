@@ -41,7 +41,7 @@ export function validate(schemas) {
       if (isZodError(err)) {
         return next(
           ApiError.badRequest(
-            'Kiritilgan ma\'lumotlarda xato bor',
+            "Kiritilgan ma'lumotlarda xato bor",
             ERROR_CODES.VALIDATION_ERROR,
             zodIssues(err),
           ),

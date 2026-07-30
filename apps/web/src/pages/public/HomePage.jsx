@@ -6,9 +6,21 @@ import { Button, Card, CardBody } from '../../components/ui';
 
 const benefits = [
   { icon: Clock, title: 'Onlayn yozuv 24/7', text: 'Salon yopiq bo\u2019lsa ham navbat olasiz' },
-  { icon: CalendarCheck, title: 'Aniq bo\u2019sh vaqt', text: 'Ko\u2019rinayotgan vaqt haqiqatan bo\u2019sh' },
-  { icon: Wallet, title: 'Narxlar oldindan', text: 'Xizmat narxi va davomiyligi ko\u2019rinib turadi' },
-  { icon: ShieldCheck, title: 'Tekshirilgan salonlar', text: 'Har bir salon moderatsiyadan o\u2019tadi' },
+  {
+    icon: CalendarCheck,
+    title: 'Aniq bo\u2019sh vaqt',
+    text: 'Ko\u2019rinayotgan vaqt haqiqatan bo\u2019sh',
+  },
+  {
+    icon: Wallet,
+    title: 'Narxlar oldindan',
+    text: 'Xizmat narxi va davomiyligi ko\u2019rinib turadi',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Tekshirilgan salonlar',
+    text: 'Har bir salon moderatsiyadan o\u2019tadi',
+  },
 ];
 
 /**
@@ -21,8 +33,8 @@ export default function HomePage() {
       <section className="bg-brand-50/60 py-12 sm:py-20">
         <Container className="max-w-3xl text-center">
           <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
-            Go&apos;zallik salonlariga{' '}
-            <span className="text-brand-600">bir necha bosishda</span> yoziling
+            Go&apos;zallik salonlariga <span className="text-brand-600">bir necha bosishda</span>{' '}
+            yoziling
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-gray-600">
             Bo&apos;sh vaqtni ko&apos;ring, xizmatni tanlang va navbatingizni band qiling.

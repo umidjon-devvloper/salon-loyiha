@@ -63,7 +63,7 @@ const bookingSchema = new Schema(
     date: {
       type: String,
       required: true,
-      validate: [isValidDateStr, 'Sana \'YYYY-MM-DD\' ko\'rinishida bo\'lishi kerak'],
+      validate: [isValidDateStr, "Sana 'YYYY-MM-DD' ko'rinishida bo'lishi kerak"],
     },
     startMin: { type: Number, required: true, min: 0, max: MINUTES_IN_DAY },
     endMin: { type: Number, required: true, min: 0, max: MINUTES_IN_DAY },
@@ -95,7 +95,7 @@ const bookingSchema = new Schema(
 
 bookingSchema.pre('validate', function () {
   if (this.endMin <= this.startMin) {
-    throw new Error('Yozuv tugash vaqti boshlanish vaqtidan keyin bo\'lishi kerak');
+    throw new Error("Yozuv tugash vaqti boshlanish vaqtidan keyin bo'lishi kerak");
   }
 });
 

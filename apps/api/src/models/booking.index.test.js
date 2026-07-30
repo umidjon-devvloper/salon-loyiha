@@ -23,7 +23,9 @@ let salonId;
 const baseDoc = () => ({
   salon: salonId,
   master: masterId,
-  items: [{ service: new mongoose.Types.ObjectId(), name: 'Manikyur', price: 100000, durationMin: 60 }],
+  items: [
+    { service: new mongoose.Types.ObjectId(), name: 'Manikyur', price: 100000, durationMin: 60 },
+  ],
   date: '2026-08-05',
   startMin: 840, // 14:00
   endMin: 900,
@@ -57,7 +59,7 @@ describe('Booking unique partial index', { skip }, () => {
     );
   });
 
-  test('parallel ikki so\'rovdan aynan bittasi o\'tadi', async () => {
+  test("parallel ikki so'rovdan aynan bittasi o'tadi", async () => {
     await Booking.deleteMany({});
     const results = await Promise.allSettled([
       Booking.create({ ...baseDoc(), code: 'GA-3456' }),
@@ -72,7 +74,7 @@ describe('Booking unique partial index', { skip }, () => {
     assert.equal(failed[0].reason.code, 11000);
   });
 
-  test('bekor qilingan yozuv slotni bo\'shatadi', async () => {
+  test("bekor qilingan yozuv slotni bo'shatadi", async () => {
     await Booking.deleteMany({});
     const first = await Booking.create({ ...baseDoc(), code: 'GA-4567' });
 

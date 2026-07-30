@@ -39,7 +39,7 @@ function verify(token, secret, expectedType) {
 
   // Access token'ni refresh o'rnida ishlatishning oldini oladi
   if (payload.typ !== expectedType) {
-    throw ApiError.unauthorized('Token turi noto\'g\'ri', ERROR_CODES.TOKEN_INVALID);
+    throw ApiError.unauthorized("Token turi noto'g'ri", ERROR_CODES.TOKEN_INVALID);
   }
   return payload;
 }

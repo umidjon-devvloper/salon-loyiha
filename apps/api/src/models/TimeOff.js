@@ -13,12 +13,12 @@ const timeOffSchema = new Schema(
     dateFrom: {
       type: String,
       required: true,
-      validate: [isValidDateStr, 'Sana \'YYYY-MM-DD\' ko\'rinishida bo\'lishi kerak'],
+      validate: [isValidDateStr, "Sana 'YYYY-MM-DD' ko'rinishida bo'lishi kerak"],
     },
     dateTo: {
       type: String,
       required: true,
-      validate: [isValidDateStr, 'Sana \'YYYY-MM-DD\' ko\'rinishida bo\'lishi kerak'],
+      validate: [isValidDateStr, "Sana 'YYYY-MM-DD' ko'rinishida bo'lishi kerak"],
     },
 
     allDay: { type: Boolean, default: true },
@@ -32,14 +32,14 @@ const timeOffSchema = new Schema(
 
 timeOffSchema.pre('validate', function () {
   if (this.dateTo < this.dateFrom) {
-    throw new Error('Tugash sanasi boshlanish sanasidan oldin bo\'lishi mumkin emas');
+    throw new Error("Tugash sanasi boshlanish sanasidan oldin bo'lishi mumkin emas");
   }
   if (!this.allDay) {
     if (this.startMin === null || this.endMin === null) {
-      throw new Error('Kun bo\'yi emas bo\'lsa, boshlanish va tugash vaqti kerak');
+      throw new Error("Kun bo'yi emas bo'lsa, boshlanish va tugash vaqti kerak");
     }
     if (this.endMin <= this.startMin) {
-      throw new Error('Tugash vaqti boshlanish vaqtidan keyin bo\'lishi kerak');
+      throw new Error("Tugash vaqti boshlanish vaqtidan keyin bo'lishi kerak");
     }
   }
 });

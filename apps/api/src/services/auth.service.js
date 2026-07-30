@@ -56,7 +56,7 @@ export async function register({ phone, password, fullName, role, userAgent }) {
   const exists = await User.exists({ phone });
   if (exists) {
     throw ApiError.conflict(
-      'Bu telefon raqam allaqachon ro\'yxatdan o\'tgan',
+      "Bu telefon raqam allaqachon ro'yxatdan o'tgan",
       ERROR_CODES.PHONE_TAKEN,
     );
   }
@@ -74,7 +74,7 @@ export async function login({ phone, password, userAgent }) {
   // Telefon topilmadi va parol xato — BIR XIL xabar.
   // Aks holda qaysi raqamlar ro'yxatdan o'tganini aniqlab olish mumkin.
   const invalid = ApiError.unauthorized(
-    'Telefon raqam yoki parol noto\'g\'ri',
+    "Telefon raqam yoki parol noto'g'ri",
     ERROR_CODES.INVALID_CREDENTIALS,
   );
 
@@ -153,7 +153,7 @@ export async function changePassword(userId, { currentPassword, newPassword }) {
 
   const match = await bcrypt.compare(currentPassword, user.passwordHash);
   if (!match) {
-    throw ApiError.badRequest('Joriy parol noto\'g\'ri', ERROR_CODES.INVALID_CREDENTIALS);
+    throw ApiError.badRequest("Joriy parol noto'g'ri", ERROR_CODES.INVALID_CREDENTIALS);
   }
 
   user.passwordHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
@@ -185,12 +185,12 @@ export async function deleteAccount(userId, { password }) {
 
   const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) {
-    throw ApiError.badRequest('Parol noto\'g\'ri', ERROR_CODES.INVALID_CREDENTIALS);
+    throw ApiError.badRequest("Parol noto'g'ri", ERROR_CODES.INVALID_CREDENTIALS);
   }
 
   if (user.role === ROLES.OWNER) {
     throw ApiError.badRequest(
-      'Salon egasi hisobini o\'chirish uchun administratorga murojaat qiling',
+      "Salon egasi hisobini o'chirish uchun administratorga murojaat qiling",
       ERROR_CODES.FORBIDDEN,
     );
   }
@@ -202,14 +202,14 @@ export async function deleteAccount(userId, { password }) {
       $set: {
         status: 'cancelled',
         cancelledBy: 'client',
-        cancelReason: 'Foydalanuvchi hisobini o\'chirdi',
+        cancelReason: "Foydalanuvchi hisobini o'chirdi",
       },
     },
   );
 
   const stamp = Date.now();
   user.phone = `deleted_${stamp}_${String(user._id).slice(-6)}`;
-  user.fullName = 'O\'chirilgan foydalanuvchi';
+  user.fullName = "O'chirilgan foydalanuvchi";
   user.passwordHash = await bcrypt.hash(`deleted_${stamp}_${Math.random()}`, BCRYPT_ROUNDS);
   user.avatar = null;
   user.isActive = false;

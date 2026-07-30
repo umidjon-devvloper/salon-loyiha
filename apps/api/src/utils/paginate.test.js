@@ -10,7 +10,7 @@ describe('escapeRegex', () => {
     assert.equal(escapeRegex('a+b?c'), 'a\\+b\\?c');
   });
 
-  test('oddiy matn o\'zgarmaydi', () => {
+  test("oddiy matn o'zgarmaydi", () => {
     assert.equal(escapeRegex('lotus beauty'), 'lotus beauty');
   });
 });
@@ -21,7 +21,7 @@ describe('searchRegex', () => {
     assert.ok(searchRegex('LOTUS').test('lotus beauty'));
   });
 
-  test('⭐ qisman so\'z topiladi ($text buni qila olmaydi)', () => {
+  test("⭐ qisman so'z topiladi ($text buni qila olmaydi)", () => {
     assert.ok(searchRegex('lot').test('Lotus Beauty'));
     assert.ok(searchRegex('eaut').test('Lotus Beauty'));
   });
@@ -39,7 +39,7 @@ describe('searchRegex', () => {
 });
 
 describe('skipOf / metaOf', () => {
-  test('skip to\'g\'ri hisoblanadi', () => {
+  test("skip to'g'ri hisoblanadi", () => {
     assert.equal(skipOf({ page: 1, limit: 20 }), 0);
     assert.equal(skipOf({ page: 2, limit: 20 }), 20);
     assert.equal(skipOf({ page: 5, limit: 12 }), 48);
@@ -54,11 +54,11 @@ describe('skipOf / metaOf', () => {
     });
   });
 
-  test('natija yo\'q bo\'lsa ham pages kamida 1', () => {
+  test("natija yo'q bo'lsa ham pages kamida 1", () => {
     assert.equal(metaOf({ page: 1, limit: 20, total: 0 }).pages, 1);
   });
 
-  test('aniq bo\'linsa ortiqcha sahifa qo\'shilmaydi', () => {
+  test("aniq bo'linsa ortiqcha sahifa qo'shilmaydi", () => {
     assert.equal(metaOf({ page: 1, limit: 20, total: 40 }).pages, 2);
   });
 });

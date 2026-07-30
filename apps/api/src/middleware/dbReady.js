@@ -19,7 +19,7 @@ export function dbReady(req, res, next) {
   res.set('Retry-After', '10');
   return res.status(503).json({
     success: false,
-    message: 'Xizmat vaqtincha mavjud emas. Bir ozdan keyin qayta urinib ko\'ring',
+    message: "Xizmat vaqtincha mavjud emas. Bir ozdan keyin qayta urinib ko'ring",
     code: ERROR_CODES.DB_UNAVAILABLE,
   });
 }

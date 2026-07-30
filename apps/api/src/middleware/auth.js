@@ -13,9 +13,7 @@ function extractToken(req) {
 export function auth(req, _res, next) {
   const token = extractToken(req);
   if (!token) {
-    return next(
-      ApiError.unauthorized('Avtorizatsiya talab qilinadi', ERROR_CODES.UNAUTHORIZED),
-    );
+    return next(ApiError.unauthorized('Avtorizatsiya talab qilinadi', ERROR_CODES.UNAUTHORIZED));
   }
 
   try {

@@ -26,17 +26,17 @@ export function errorHandler(err, req, res, _next) {
     if (err.details) errors = err.details;
   } else if (isZodError(err)) {
     status = 400;
-    message = 'Kiritilgan ma\'lumotlarda xato bor';
+    message = "Kiritilgan ma'lumotlarda xato bor";
     code = ERROR_CODES.VALIDATION_ERROR;
     errors = zodIssues(err);
   } else if (err instanceof mongoose.Error.ValidationError) {
     status = 400;
-    message = 'Kiritilgan ma\'lumotlarda xato bor';
+    message = "Kiritilgan ma'lumotlarda xato bor";
     code = ERROR_CODES.VALIDATION_ERROR;
     errors = Object.values(err.errors).map((e) => ({ field: e.path, message: e.message }));
   } else if (err instanceof mongoose.Error.CastError) {
     status = 400;
-    message = 'Noto\'g\'ri identifikator';
+    message = "Noto'g'ri identifikator";
     code = ERROR_CODES.VALIDATION_ERROR;
   } else if (err.code === 11000) {
     // Unique index buzildi. Booking uchun bu — slot band.
@@ -46,15 +46,15 @@ export function errorHandler(err, req, res, _next) {
       message = 'Kechirasiz, bu vaqtni sizdan oldin band qilishdi';
       code = ERROR_CODES.SLOT_TAKEN;
     } else if (field.includes('phone')) {
-      message = 'Bu telefon raqam allaqachon ro\'yxatdan o\'tgan';
+      message = "Bu telefon raqam allaqachon ro'yxatdan o'tgan";
       code = ERROR_CODES.PHONE_TAKEN;
     } else {
-      message = 'Bu ma\'lumot allaqachon mavjud';
+      message = "Bu ma'lumot allaqachon mavjud";
       code = 'DUPLICATE_KEY';
     }
   } else if (err.type === 'entity.too.large') {
     status = 413;
-    message = 'Yuborilgan ma\'lumot juda katta';
+    message = "Yuborilgan ma'lumot juda katta";
     code = ERROR_CODES.PAYLOAD_TOO_LARGE;
   }
 

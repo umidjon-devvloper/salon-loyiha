@@ -40,13 +40,13 @@ const log = (...a) => console.log('  ', ...a);
 
 async function seedAdmin() {
   if (!env.ADMIN_PHONE || !env.ADMIN_PASSWORD) {
-    log('⚠️  ADMIN_PHONE / ADMIN_PASSWORD .env da yo\'q — admin yaratilmadi');
+    log("⚠️  ADMIN_PHONE / ADMIN_PASSWORD .env da yo'q — admin yaratilmadi");
     return null;
   }
 
   const phone = normalizePhone(env.ADMIN_PHONE);
   if (!phone) {
-    log('⚠️  ADMIN_PHONE noto\'g\'ri formatda — admin yaratilmadi');
+    log("⚠️  ADMIN_PHONE noto'g'ri formatda — admin yaratilmadi");
     return null;
   }
 
@@ -95,15 +95,21 @@ async function seedCategories() {
 
 async function seedSettings() {
   const settings = await Settings.getGlobal();
-  log(`sozlamalar: booking fee ${settings.bookingFee.fixedAmount} so'm, hold ${settings.holdMinutes} daq`);
+  log(
+    `sozlamalar: booking fee ${settings.bookingFee.fixedAmount} so'm, hold ${settings.holdMinutes} daq`,
+  );
 }
 
 // ── 4. Demo ma'lumot (faqat dev) ────────────────────────────────
 
 async function resetDemo() {
-  const owners = await User.find({ phone: { $regex: '^\\+99890111000' } }).select('_id').lean();
+  const owners = await User.find({ phone: { $regex: '^\\+99890111000' } })
+    .select('_id')
+    .lean();
   const ownerIds = owners.map((o) => o._id);
-  const salons = await Salon.find({ owner: { $in: ownerIds } }).select('_id').lean();
+  const salons = await Salon.find({ owner: { $in: ownerIds } })
+    .select('_id')
+    .lean();
   const salonIds = salons.map((s) => s._id);
 
   await Promise.all([
@@ -251,7 +257,7 @@ async function main() {
 
   if (RESET) {
     if (env.isProd) {
-      console.error('❌ --reset production\'da ishlatilmaydi');
+      console.error("❌ --reset production'da ishlatilmaydi");
       process.exit(1);
     }
     await resetDemo();
@@ -263,10 +269,10 @@ async function main() {
 
   if (WITH_DEMO) {
     if (env.isProd) {
-      console.error('❌ --demo production\'da ishlatilmaydi');
+      console.error("❌ --demo production'da ishlatilmaydi");
       process.exit(1);
     }
-    console.log('\n  — demo ma\'lumot —');
+    console.log("\n  — demo ma'lumot —");
     await seedDemo(categories);
     log('demo salon egasi paroli: demo1234');
   }

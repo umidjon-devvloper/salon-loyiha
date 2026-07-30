@@ -7,8 +7,8 @@ const envSchema = z.object({
 
   MONGO_URI: z.string().min(1, 'MONGO_URI majburiy'),
 
-  JWT_ACCESS_SECRET: z.string().min(16, 'JWT_ACCESS_SECRET kamida 16 belgi bo\'lsin'),
-  JWT_REFRESH_SECRET: z.string().min(16, 'JWT_REFRESH_SECRET kamida 16 belgi bo\'lsin'),
+  JWT_ACCESS_SECRET: z.string().min(16, "JWT_ACCESS_SECRET kamida 16 belgi bo'lsin"),
+  JWT_REFRESH_SECRET: z.string().min(16, "JWT_REFRESH_SECRET kamida 16 belgi bo'lsin"),
   JWT_ACCESS_EXPIRES: z.string().default('15m'),
   JWT_REFRESH_EXPIRES: z.string().default('30d'),
 

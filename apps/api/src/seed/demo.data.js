@@ -30,10 +30,28 @@ export const DEMO_SALONS = [
     services: [
       { name: 'Klassik manikyur', category: 'manikyur', price: 100000, durationMin: 60 },
       { name: 'Gel qoplama', category: 'manikyur', price: 150000, durationMin: 90, bufferMin: 10 },
-      { name: 'Naxun uzaytirish', category: 'manikyur', price: 250000, durationMin: 120, bufferMin: 15 },
+      {
+        name: 'Naxun uzaytirish',
+        category: 'manikyur',
+        price: 250000,
+        durationMin: 120,
+        bufferMin: 15,
+      },
       { name: 'Klassik pedikyur', category: 'pedikyur', price: 120000, durationMin: 75 },
-      { name: 'Apparat pedikyuri', category: 'pedikyur', price: 180000, priceTo: 250000, durationMin: 90 },
-      { name: 'Naxun dizayni', category: 'manikyur', price: 30000, isPriceFrom: true, durationMin: 30 },
+      {
+        name: 'Apparat pedikyuri',
+        category: 'pedikyur',
+        price: 180000,
+        priceTo: 250000,
+        durationMin: 90,
+      },
+      {
+        name: 'Naxun dizayni',
+        category: 'manikyur',
+        price: 30000,
+        isPriceFrom: true,
+        durationMin: 30,
+      },
       { name: 'Parafin terapiya', category: 'manikyur', price: 80000, durationMin: 45 },
       { name: 'Naxun tiklash', category: 'manikyur', price: 60000, durationMin: 40 },
     ],
@@ -42,7 +60,7 @@ export const DEMO_SALONS = [
     name: 'Nafisa Studio',
     district: 'Yunusobod',
     phone: '+998901110002',
-    description: 'Soch turmagi va bo\'yash bo\'yicha ixtisoslashgan studiya.',
+    description: "Soch turmagi va bo'yash bo'yicha ixtisoslashgan studiya.",
     categorySlugs: ['soch-turmagi', 'vizajist'],
     rating: 4.6,
     reviewCount: 74,
@@ -53,11 +71,25 @@ export const DEMO_SALONS = [
     ],
     services: [
       { name: 'Soch kesish', category: 'soch-turmagi', price: 80000, durationMin: 45 },
-      { name: 'Soch bo\'yash', category: 'soch-turmagi', price: 300000, priceTo: 600000, durationMin: 180, bufferMin: 15 },
+      {
+        name: "Soch bo'yash",
+        category: 'soch-turmagi',
+        price: 300000,
+        priceTo: 600000,
+        durationMin: 180,
+        bufferMin: 15,
+      },
       { name: 'Keratin tiklash', category: 'soch-turmagi', price: 450000, durationMin: 150 },
-      { name: 'Turmak (soch yig\'ish)', category: 'soch-turmagi', price: 150000, durationMin: 60 },
+      { name: "Turmak (soch yig'ish)", category: 'soch-turmagi', price: 150000, durationMin: 60 },
       { name: 'Kunlik makiyaj', category: 'vizajist', price: 200000, durationMin: 60 },
-      { name: 'Kelin makiyaji', category: 'vizajist', price: 500000, isPriceFrom: true, durationMin: 120, bufferMin: 20 },
+      {
+        name: 'Kelin makiyaji',
+        category: 'vizajist',
+        price: 500000,
+        isPriceFrom: true,
+        durationMin: 120,
+        bufferMin: 20,
+      },
       { name: 'Qosh korreksiyasi', category: 'vizajist', price: 50000, durationMin: 30 },
       { name: 'Kiprik uzaytirish', category: 'vizajist', price: 250000, durationMin: 120 },
     ],
@@ -76,12 +108,30 @@ export const DEMO_SALONS = [
       { fullName: 'Gulnora Ismoilova', experienceYears: 6 },
     ],
     services: [
-      { name: 'Yuz tozalash', category: 'kosmetolog', price: 250000, durationMin: 90, bufferMin: 15 },
+      {
+        name: 'Yuz tozalash',
+        category: 'kosmetolog',
+        price: 250000,
+        durationMin: 90,
+        bufferMin: 15,
+      },
       { name: 'Pilling', category: 'kosmetolog', price: 300000, durationMin: 60 },
       { name: 'Mezoterapiya', category: 'kosmetolog', price: 450000, durationMin: 75 },
       { name: 'Ultratovushli tozalash', category: 'kosmetolog', price: 200000, durationMin: 60 },
-      { name: 'Lazer depilatsiya (oyoq)', category: 'depilatsiya', price: 350000, durationMin: 60, bufferMin: 10 },
-      { name: 'Shakar depilatsiya', category: 'depilatsiya', price: 120000, priceTo: 300000, durationMin: 45 },
+      {
+        name: 'Lazer depilatsiya (oyoq)',
+        category: 'depilatsiya',
+        price: 350000,
+        durationMin: 60,
+        bufferMin: 10,
+      },
+      {
+        name: 'Shakar depilatsiya',
+        category: 'depilatsiya',
+        price: 120000,
+        priceTo: 300000,
+        durationMin: 45,
+      },
       { name: 'Yuz massaji', category: 'kosmetolog', price: 150000, durationMin: 45 },
       { name: 'Maska va parvarish', category: 'kosmetolog', price: 180000, durationMin: 50 },
     ],
@@ -102,9 +152,15 @@ export const DEMO_SALONS = [
     services: [
       { name: 'Klassik massaj', category: 'massaj', price: 200000, durationMin: 60 },
       { name: 'Relaks massaj', category: 'massaj', price: 250000, durationMin: 90 },
-      { name: 'Anticellulit massaj', category: 'massaj', price: 300000, durationMin: 60, bufferMin: 10 },
+      {
+        name: 'Anticellulit massaj',
+        category: 'massaj',
+        price: 300000,
+        durationMin: 60,
+        bufferMin: 10,
+      },
       { name: 'Orqa massaji', category: 'massaj', price: 150000, durationMin: 40 },
-      { name: 'Bosh va bo\'yin massaji', category: 'massaj', price: 120000, durationMin: 30 },
+      { name: "Bosh va bo'yin massaji", category: 'massaj', price: 120000, durationMin: 30 },
       { name: 'Oyoq massaji', category: 'massaj', price: 130000, durationMin: 40 },
       { name: 'Tosh massaji', category: 'massaj', price: 350000, durationMin: 90, bufferMin: 15 },
       { name: 'Sport massaji', category: 'massaj', price: 280000, durationMin: 60 },
@@ -125,14 +181,31 @@ export const DEMO_SALONS = [
       { fullName: 'Umida Xolmatova', experienceYears: 9 },
     ],
     services: [
-      { name: 'Manikyur + gel', category: 'manikyur', price: 180000, durationMin: 105, bufferMin: 10 },
+      {
+        name: 'Manikyur + gel',
+        category: 'manikyur',
+        price: 180000,
+        durationMin: 105,
+        bufferMin: 10,
+      },
       { name: 'Ekspress manikyur', category: 'manikyur', price: 70000, durationMin: 30 },
       { name: 'Soch kesish', category: 'soch-turmagi', price: 70000, durationMin: 40 },
       { name: 'Feniya (soch quritish)', category: 'soch-turmagi', price: 50000, durationMin: 30 },
-      { name: 'Kompleks: manikyur + pedikyur', category: 'manikyur', price: 220000, durationMin: 150, bufferMin: 15 },
+      {
+        name: 'Kompleks: manikyur + pedikyur',
+        category: 'manikyur',
+        price: 220000,
+        durationMin: 150,
+        bufferMin: 15,
+      },
       { name: 'Soch maskasi', category: 'soch-turmagi', price: 90000, durationMin: 45 },
-      { name: 'Qosh bo\'yash', category: 'gozallik-salonlari', price: 60000, durationMin: 30 },
-      { name: 'Kiprik laminatsiyasi', category: 'gozallik-salonlari', price: 200000, durationMin: 75 },
+      { name: "Qosh bo'yash", category: 'gozallik-salonlari', price: 60000, durationMin: 30 },
+      {
+        name: 'Kiprik laminatsiyasi',
+        category: 'gozallik-salonlari',
+        price: 200000,
+        durationMin: 75,
+      },
     ],
   },
 ];
@@ -140,7 +213,7 @@ export const DEMO_SALONS = [
 const CLIENT_NAMES = [
   'Dildora Karimova',
   'Nigora Sattorova',
-  'Madina Yo\'ldosheva',
+  "Madina Yo'ldosheva",
   'Aziza Qosimova',
   'Sabina Tursunova',
   'Nilufar Ergasheva',
@@ -204,10 +277,14 @@ export function buildDemoBookings({ today, masters, servicesBySalon, count = 20 
        * va demo kalendar bo'm-bo'sh ko'rinadi. Shuning uchun har bir yozuv uchun
        * kun ichida siljigan nuqtadan boshlaymiz, joy topilmasa — boshiga qaytamiz.
        */
-      const offset = (i * 75) % Math.max(SLOT_STEP, day.endMin - day.startMin - duration || SLOT_STEP);
+      const offset =
+        (i * 75) % Math.max(SLOT_STEP, day.endMin - day.startMin - duration || SLOT_STEP);
       let start = null;
 
-      for (const from of [ceilToStep(day.startMin + offset, SLOT_STEP), ceilToStep(day.startMin, SLOT_STEP)]) {
+      for (const from of [
+        ceilToStep(day.startMin + offset, SLOT_STEP),
+        ceilToStep(day.startMin, SLOT_STEP),
+      ]) {
         for (let s = from; s + duration <= day.endMin; s += SLOT_STEP) {
           if (fits(s)) {
             start = s;

@@ -20,7 +20,7 @@ const breakSchema = new Schema(
 // tashlangan, `throw` esa 8 va 9 da bir xil ishlaydi.
 breakSchema.pre('validate', function () {
   if (this.endMin <= this.startMin) {
-    throw new Error('Tanaffus tugash vaqti boshlanish vaqtidan keyin bo\'lishi kerak');
+    throw new Error("Tanaffus tugash vaqti boshlanish vaqtidan keyin bo'lishi kerak");
   }
 });
 
@@ -39,12 +39,12 @@ workingDaySchema.pre('validate', function () {
   if (!this.isOpen) return;
 
   if (this.endMin <= this.startMin) {
-    throw new Error('Ish tugash vaqti boshlanish vaqtidan keyin bo\'lishi kerak');
+    throw new Error("Ish tugash vaqti boshlanish vaqtidan keyin bo'lishi kerak");
   }
 
   for (const b of this.breaks || []) {
     if (b.startMin < this.startMin || b.endMin > this.endMin) {
-      throw new Error('Tanaffus ish vaqti ichida bo\'lishi kerak');
+      throw new Error("Tanaffus ish vaqti ichida bo'lishi kerak");
     }
   }
 });

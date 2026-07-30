@@ -15,7 +15,7 @@ export const phoneSchema = z
     if (!normalized) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Telefon raqam noto\'g\'ri. Namuna: +998 90 123 45 67',
+        message: "Telefon raqam noto'g'ri. Namuna: +998 90 123 45 67",
       });
       return z.NEVER;
     }
@@ -24,13 +24,13 @@ export const phoneSchema = z
 
 export const passwordSchema = z
   .string({ required_error: 'Parol kiritilishi shart' })
-  .min(6, 'Parol kamida 6 belgidan iborat bo\'lishi kerak')
+  .min(6, "Parol kamida 6 belgidan iborat bo'lishi kerak")
   .max(72, 'Parol juda uzun'); // bcrypt 72 baytdan keyingisini kesib tashlaydi
 
 export const fullNameSchema = z
   .string({ required_error: 'Ism kiritilishi shart' })
   .trim()
-  .min(2, 'Ism kamida 2 belgidan iborat bo\'lishi kerak')
+  .min(2, "Ism kamida 2 belgidan iborat bo'lishi kerak")
   .max(100, 'Ism juda uzun');
 
 export const registerSchema = z.object({
@@ -43,11 +43,13 @@ export const registerSchema = z.object({
 
 export const loginSchema = z.object({
   phone: phoneSchema,
-  password: z.string({ required_error: 'Parol kiritilishi shart' }).min(1, 'Parol kiritilishi shart'),
+  password: z
+    .string({ required_error: 'Parol kiritilishi shart' })
+    .min(1, 'Parol kiritilishi shart'),
 });
 
 export const refreshSchema = z.object({
-  refreshToken: z.string({ required_error: 'Token yo\'q' }).min(10, 'Token noto\'g\'ri'),
+  refreshToken: z.string({ required_error: "Token yo'q" }).min(10, "Token noto'g'ri"),
 });
 
 export const updateMeSchema = z
@@ -57,12 +59,14 @@ export const updateMeSchema = z
     avatar: z.string().trim().max(300).nullable().optional(),
   })
   .refine((v) => Object.keys(v).length > 0, {
-    message: 'O\'zgartirish uchun kamida bitta maydon kerak',
+    message: "O'zgartirish uchun kamida bitta maydon kerak",
   });
 
 export const changePasswordSchema = z
   .object({
-    currentPassword: z.string({ required_error: 'Joriy parol kiritilishi shart' }).min(1, 'Joriy parol kiritilishi shart'),
+    currentPassword: z
+      .string({ required_error: 'Joriy parol kiritilishi shart' })
+      .min(1, 'Joriy parol kiritilishi shart'),
     newPassword: passwordSchema,
   })
   .refine((v) => v.currentPassword !== v.newPassword, {
@@ -72,12 +76,14 @@ export const changePasswordSchema = z
 
 /** Mobil ilova uchun (v1 da to'planadi, v2 da ishlatiladi) */
 export const pushTokenSchema = z.object({
-  token: z.string().trim().min(10, 'Push token noto\'g\'ri').max(300),
+  token: z.string().trim().min(10, "Push token noto'g'ri").max(300),
   platform: z.enum(['ios', 'android']),
   deviceId: z.string().trim().max(100).optional().default(''),
 });
 
 /** Hisobni o'chirish — Apple talabi. Parol bilan tasdiqlanadi */
 export const deleteAccountSchema = z.object({
-  password: z.string({ required_error: 'Parol kiritilishi shart' }).min(1, 'Parol kiritilishi shart'),
+  password: z
+    .string({ required_error: 'Parol kiritilishi shart' })
+    .min(1, 'Parol kiritilishi shart'),
 });

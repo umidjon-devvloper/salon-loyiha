@@ -27,7 +27,7 @@ export function normalizeError(error) {
     };
   }
   if (error.code === 'ECONNABORTED') {
-    return { status: 0, code: 'TIMEOUT', message: 'Server javob bermadi. Qayta urinib ko\'ring' };
+    return { status: 0, code: 'TIMEOUT', message: "Server javob bermadi. Qayta urinib ko'ring" };
   }
   return {
     status: 0,
