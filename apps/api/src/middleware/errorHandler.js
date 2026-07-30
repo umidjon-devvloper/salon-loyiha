@@ -1,8 +1,8 @@
-import { ZodError } from 'zod';
 import mongoose from 'mongoose';
 import env from '../config/env.js';
 import { ERROR_CODES } from '../config/constants.js';
 import ApiError from '../utils/ApiError.js';
+import { isZodError, zodIssues } from '../utils/isZodError.js';
 
 /** Route topilmadi */
 export function notFoundHandler(req, _res, next) {
@@ -25,11 +25,11 @@ export function errorHandler(err, req, res, _next) {
     message = err.message;
     code = err.code;
     if (err.details) errors = err.details;
-  } else if (err instanceof ZodError) {
+  } else if (isZodError(err)) {
     status = 400;
     message = 'Kiritilgan ma\'lumotlarda xato bor';
     code = ERROR_CODES.VALIDATION_ERROR;
-    errors = err.issues.map((i) => ({ field: i.path.join('.'), message: i.message }));
+    errors = zodIssues(err);
   } else if (err instanceof mongoose.Error.ValidationError) {
     status = 400;
     message = 'Kiritilgan ma\'lumotlarda xato bor';

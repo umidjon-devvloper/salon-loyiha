@@ -9,6 +9,7 @@ import env from './config/env.js';
 import routes from './routes/index.js';
 import { sanitize } from './middleware/sanitize.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import { apiLimiter } from './middleware/rateLimit.js';
 
 const app = express();
 
@@ -54,7 +55,7 @@ app.use(
   }),
 );
 
-app.use('/api', routes);
+app.use('/api', apiLimiter, routes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
