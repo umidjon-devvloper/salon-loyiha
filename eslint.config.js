@@ -40,9 +40,19 @@ export default [
     },
   },
 
+  // ── Web build konfiglari (Node muhiti) ──────────────────────────
+  {
+    files: ['apps/web/*.config.js', 'apps/web/vite.config.js'],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: 'module',
+      globals: { ...globals.node },
+    },
+  },
+
   // ── Web ─────────────────────────────────────────────────────────
   {
-    files: ['apps/web/**/*.{js,jsx}'],
+    files: ['apps/web/src/**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: 'module',

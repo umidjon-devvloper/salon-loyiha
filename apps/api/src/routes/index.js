@@ -1,10 +1,16 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
 import { ok } from '../utils/response.js';
+import { dbReady } from '../middleware/dbReady.js';
+import { listCities } from '../services/catalog.service.js';
 import authRoutes from './auth.routes.js';
 import publicRoutes from './public.routes.js';
 
 const router = Router();
+
+/* ── Bazaga TEGMAYDIGAN endpointlar — dbReady dan oldin ────────────
+   Monitoring baza yiqilganda ham /health dan javob olishi kerak,
+   shahar/tuman ro'yxati esa konstantalardan o'qiladi. */
 
 router.get('/health', (req, res) =>
   ok(res, {
@@ -14,9 +20,14 @@ router.get('/health', (req, res) =>
   }),
 );
 
+router.get('/cities', (req, res) => ok(res, listCities()));
+
+/* ── Shundan keyingi hamma narsa bazani talab qiladi ───────────── */
+router.use(dbReady);
+
 router.use('/auth', authRoutes);
 
-// ⚠️ Katalog oxirida turadi: uning '/:slug' kabi keng route'lari
+// ⚠️ Katalog oxirida: uning '/:slug' kabi keng route'lari
 // yuqoridagi aniq yo'llarni "yutib yubormasligi" kerak
 router.use('/', publicRoutes);
 

@@ -1,6 +1,5 @@
 import path from 'node:path';
 import express from 'express';
-import mongoose from 'mongoose';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
@@ -11,7 +10,6 @@ import routes from './routes/index.js';
 import { sanitize } from './middleware/sanitize.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimit.js';
-import { dbReady } from './middleware/dbReady.js';
 
 const app = express();
 
@@ -57,19 +55,7 @@ app.use(
   }),
 );
 
-// /health baza holatidan qat'i nazar javob berishi kerak — monitoring shunga qaraydi
-app.get('/api/health', (req, res) =>
-  res.json({
-    success: true,
-    data: {
-      status: 'ok',
-      uptime: Math.round(process.uptime()),
-      db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-    },
-  }),
-);
-
-app.use('/api', apiLimiter, dbReady, routes);
+app.use('/api', apiLimiter, routes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

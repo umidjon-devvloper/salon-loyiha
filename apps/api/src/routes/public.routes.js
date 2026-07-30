@@ -15,7 +15,7 @@ const router = Router();
 /** Hammasi ochiq — mehmon ham ko'radi. Band qilish uchun auth kerak bo'ladi */
 
 router.get('/categories', ctrl.categories);
-router.get('/cities', ctrl.cities);
+// /cities routes/index.js da — u bazaga tegmaydi
 
 router.get('/salons', validate({ query: salonListSchema }), ctrl.salons);
 router.get('/salons/top', ctrl.topSalons);
