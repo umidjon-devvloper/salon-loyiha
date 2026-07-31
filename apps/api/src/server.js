@@ -1,11 +1,17 @@
 import app from './app.js';
 import env from './config/env.js';
 import { connectDB, disconnectDB } from './config/db.js';
+import { startJobs } from './jobs/index.js';
 
 let server;
+let jobs = [];
 
 async function start() {
   await connectDB();
+
+  // Cron faqat baza ulangandan keyin: ishlar birinchi daqiqadayoq
+  // bo'sh ulanishga urinmasin
+  jobs = startJobs();
 
   server = app.listen(env.PORT, () => {
     console.log(`🚀 API ishga tushdi: http://localhost:${env.PORT}/api  (${env.NODE_ENV})`);
@@ -14,6 +20,8 @@ async function start() {
 
 async function shutdown(signal) {
   console.log(`\n${signal} — to'xtatilmoqda...`);
+  jobs.forEach((job) => job.stop());
+
   if (server) {
     await new Promise((resolve) => server.close(resolve));
     console.log('🔌 HTTP server yopildi');

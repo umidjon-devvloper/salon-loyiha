@@ -7,6 +7,7 @@ import authRoutes from './auth.routes.js';
 import publicRoutes from './public.routes.js';
 import ownerRoutes from './owner.routes.js';
 import bookingRoutes from './booking.routes.js';
+import adminRoutes from './admin.routes.js';
 
 const router = Router();
 
@@ -31,13 +32,13 @@ router.use('/auth', authRoutes);
 
 router.use('/bookings', bookingRoutes);
 router.use('/owner', ownerRoutes);
+router.use('/admin', adminRoutes);
 
 // ⚠️ Katalog oxirida: uning '/:slug' kabi keng route'lari
 // yuqoridagi aniq yo'llarni "yutib yubormasligi" kerak
 router.use('/', publicRoutes);
 
 // Keyingi bloklarda ulanadi:
-// router.use('/admin', adminRoutes);
 // router.use('/payme', paymeRoutes);
 
 export default router;
