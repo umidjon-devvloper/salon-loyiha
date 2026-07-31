@@ -91,4 +91,7 @@ client.interceptors.response.use(
 /** Javob har doim { success, data, meta } — data ni ajratib beramiz */
 export const unwrap = (res) => res.data.data;
 
+/** Sahifalangan ro'yxatlar uchun: meta ham kerak (jami, sahifalar soni) */
+export const unwrapList = (res) => ({ items: res.data.data, meta: res.data.meta });
+
 export default client;

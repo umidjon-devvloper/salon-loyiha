@@ -9,6 +9,13 @@ import { toHHMM } from '@gozal/shared/utils/time';
 const img = (name, folder = 'salons') => (name ? `/uploads/${folder}/${name}` : null);
 
 /**
+ * Kartochkalar uchun kichik nusxa (400×300).
+ * Foydalanuvchilarning 85%+ telefondan kiradi — ro'yxatda 1600px rasm yuklash
+ * mobil trafikni behuda sarflaydi.
+ */
+const thumb = (name, folder = 'salons') => (name ? `/uploads/${folder}/thumb/${name}` : null);
+
+/**
  * TOP faolmi? `expireTop` cron kuniga bir marta (00:05) ishlaydi, ya'ni muddati
  * tugagan salon bir sutkagacha TOP bo'lib turishi mumkin. TOP — pullik xizmat,
  * shuning uchun ko'rsatishdan oldin muddat qayta tekshiriladi.
@@ -51,6 +58,7 @@ export function serializeSalonCard(s) {
     name: s.name,
     slug: s.slug,
     cover: img(s.cover),
+    coverThumb: thumb(s.cover),
     city: s.city,
     district: s.district,
     rating: s.rating,
@@ -74,7 +82,7 @@ export function serializeSalon(s) {
     phone: s.phone,
     telegram: s.telegram,
     instagram: s.instagram,
-    images: (s.images || []).map((n) => img(n)),
+    images: (s.images || []).map((n) => ({ url: img(n), thumb: thumb(n), name: n })),
     workingHours: (s.workingHours || [])
       .slice()
       .sort((a, b) => a.weekday - b.weekday)
@@ -87,6 +95,7 @@ export function serializeMasterCard(m) {
     id: String(m._id),
     fullName: m.fullName,
     photo: img(m.photo, 'masters'),
+    photoThumb: thumb(m.photo, 'masters'),
     experienceYears: m.experienceYears,
     rating: m.rating,
     isPrimary: m.isPrimary,
