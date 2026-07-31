@@ -239,6 +239,10 @@ bookingFee: {
 
 ### ✅ Hal qilingan
 
+- **Qo'lda yozuvda mijoz kim?** → `booking.client` **nullable** + `source: 'online' | 'manual'`.
+  Telefon orqali kelgan mijozning akkaunti yo'q; aloqa uchun `clientName` va `clientPhone`
+  har doim majburiy. Muqobil variant (har salonga soxta "telefon mijozi" foydalanuvchisi)
+  bazani va admin statistikasini buzgani uchun rad etildi
 - **Pul kimga tushadi?** → Platformaga (MCHJ hisobi). Salonga o'tkazilmaydi
 - **Kim to'laydi?** → Mijoz (band qilayotgan odam)
 - **Booking fee qancha?** → **5 000 so'm, qat'iy summa**
@@ -273,9 +277,12 @@ bookingFee: {
 | Barcha arxitektura va biznes qarorlari | ✅ Qabul qilingan |
 | Payme shartnomasi | ⏳ Mijoz ariza berishi kerak |
 | Ommaviy oferta matni | ⏳ Mijozdan |
-| Kod | 🔨 **Boshlanyapti** |
+| 1-hafta — monorepo, modellar, auth, seed, dizayn tizimi | ✅ Tayyor |
+| 2-hafta — katalog API + owner CRUD + katalog sahifalari | ✅ Tayyor |
+| 3-hafta — booking dvijogi | 🔨 **Ishlanmoqda** |
 
-**Keyingi qadam:** backend skeleti — papka strukturasi, barcha modellar (`settings` bilan), `utils/time.js`, `services/schedule.service.js`, `services/booking.service.js`.
+**Keyingi qadam:** salon egasi jadvali (`PUT /owner/schedule`), dam olish kunlari,
+kabinet yozuvlari va qo'lda yozuv; keyin frontend band qilish wizardi.
 
 ---
 

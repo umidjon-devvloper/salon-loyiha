@@ -2,10 +2,12 @@
  * Mijoz telefonda aytadigan qisqa kod: 'GA-4821'.
  *
  * Chalkashadigan belgilar (0/O, 1/I) ishlatilmaydi — kod og'zaki aytiladi.
- * Takrorlanmasligini `Booking.code` ustidagi unique index kafolatlaydi;
- * chaqiruvchi kod `11000` xatosida qayta urinadi.
+ * 32^4 ≈ 1 mln variant. Takrorlanmasligini `Booking.code` ustidagi unique
+ * index kafolatlaydi; chaqiruvchi `11000` xatosida qayta urinadi
+ * (`booking.service.js`, createBooking).
  */
-const ALPHABET = '23456789';
+// 0/O va 1/I chalkashmasligi uchun ular olib tashlangan: 32 belgi
+const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const PREFIX = 'GA';
 
 export function generateBookingCode(length = 4) {
