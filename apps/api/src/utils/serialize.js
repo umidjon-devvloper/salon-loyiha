@@ -67,8 +67,11 @@ export function serializeSalonCard(s) {
     isVerified: s.isVerified,
     minPrice: s.minPrice,
     maxPrice: s.maxPrice,
+    // `id` ham kerak: salon egasi kabinetidagi forma kategoriyani id bo'yicha tanlaydi
     categories: (s.categories || []).map((c) =>
-      typeof c === 'object' && c.name ? { slug: c.slug, name: c.name.uz } : String(c),
+      typeof c === 'object' && c.name
+        ? { id: String(c._id), slug: c.slug, name: c.name.uz }
+        : String(c),
     ),
   };
 }
@@ -117,7 +120,9 @@ export function serializeMaster(m) {
     ...serializeMasterCard(m),
     bio: m.bio,
     specialties: (m.specialties || []).map((c) =>
-      typeof c === 'object' && c.name ? { slug: c.slug, name: c.name.uz } : String(c),
+      typeof c === 'object' && c.name
+        ? { id: String(c._id), slug: c.slug, name: c.name.uz }
+        : String(c),
     ),
     // Bo'sh bo'lsa — salon jadvali ishlatiladi, buni frontend biladi
     hasOwnSchedule: Boolean(m.workingHours?.length),

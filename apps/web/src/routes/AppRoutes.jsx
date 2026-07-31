@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
 import { Spinner } from '../components/ui';
 import { ProtectedRoute } from './ProtectedRoute';
+import { RoleRoute } from './RoleRoute';
 
 const HomePage = lazy(() => import('../pages/public/HomePage'));
 const SalonListPage = lazy(() => import('../pages/public/SalonListPage'));
@@ -14,6 +15,15 @@ const SearchPage = lazy(() => import('../pages/public/SearchPage'));
 const BookingPage = lazy(() => import('../pages/client/BookingPage'));
 const BookingSuccessPage = lazy(() => import('../pages/client/BookingSuccessPage'));
 const MyBookingsPage = lazy(() => import('../pages/client/MyBookingsPage'));
+
+const CabinetLayout = lazy(() => import('../components/layout/CabinetLayout'));
+const OwnerDashboard = lazy(() => import('../pages/owner/OwnerDashboard'));
+const SalonEditPage = lazy(() => import('../pages/owner/SalonEditPage'));
+const ServicesPage = lazy(() => import('../pages/owner/ServicesPage'));
+const MastersPage = lazy(() => import('../pages/owner/MastersPage'));
+const SchedulePage = lazy(() => import('../pages/owner/SchedulePage'));
+const TimeOffPage = lazy(() => import('../pages/owner/TimeOffPage'));
+const OwnerBookingsPage = lazy(() => import('../pages/owner/OwnerBookingsPage'));
 const NotFoundPage = lazy(() => import('../pages/public/NotFoundPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
@@ -52,7 +62,20 @@ export function AppRoutes() {
             <Route path="/band-qilish/:masterId" element={<BookingPage />} />
             <Route path="/band-qilish/tasdiq/:code" element={<BookingSuccessPage />} />
             <Route path="/profil/yozuvlarim" element={<MyBookingsPage />} />
-            {/* 4-haftada: /profil, /profil/sevimlilar, /kabinet, /admin */}
+            {/* 4-haftada: /profil, /profil/sevimlilar */}
+          </Route>
+
+          {/* ── Salon egasi kabineti ──────────── */}
+          <Route element={<RoleRoute roles={['owner', 'admin']} />}>
+            <Route path="/kabinet" element={<CabinetLayout />}>
+              <Route index element={<OwnerDashboard />} />
+              <Route path="salon" element={<SalonEditPage />} />
+              <Route path="xizmatlar" element={<ServicesPage />} />
+              <Route path="mutaxassislar" element={<MastersPage />} />
+              <Route path="jadval" element={<SchedulePage />} />
+              <Route path="dam-olish" element={<TimeOffPage />} />
+              <Route path="yozuvlar" element={<OwnerBookingsPage />} />
+            </Route>
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />
