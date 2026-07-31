@@ -24,6 +24,15 @@ const MastersPage = lazy(() => import('../pages/owner/MastersPage'));
 const SchedulePage = lazy(() => import('../pages/owner/SchedulePage'));
 const TimeOffPage = lazy(() => import('../pages/owner/TimeOffPage'));
 const OwnerBookingsPage = lazy(() => import('../pages/owner/OwnerBookingsPage'));
+
+const AdminLayout = lazy(() => import('../components/layout/AdminLayout'));
+const AdminDashboard = lazy(() => import('../pages/admin/AdminDashboard'));
+const AdminSalonsPage = lazy(() => import('../pages/admin/AdminSalonsPage'));
+const AdminSalonDetailPage = lazy(() => import('../pages/admin/AdminSalonDetailPage'));
+const AdminCategoriesPage = lazy(() => import('../pages/admin/AdminCategoriesPage'));
+const AdminUsersPage = lazy(() => import('../pages/admin/AdminUsersPage'));
+const AdminBookingsPage = lazy(() => import('../pages/admin/AdminBookingsPage'));
+const AdminSettingsPage = lazy(() => import('../pages/admin/AdminSettingsPage'));
 const NotFoundPage = lazy(() => import('../pages/public/NotFoundPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
@@ -75,6 +84,19 @@ export function AppRoutes() {
               <Route path="jadval" element={<SchedulePage />} />
               <Route path="dam-olish" element={<TimeOffPage />} />
               <Route path="yozuvlar" element={<OwnerBookingsPage />} />
+            </Route>
+          </Route>
+
+          {/* ── Admin ─────────────────────────── */}
+          <Route element={<RoleRoute roles={['admin']} />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="salonlar" element={<AdminSalonsPage />} />
+              <Route path="salonlar/:id" element={<AdminSalonDetailPage />} />
+              <Route path="kategoriyalar" element={<AdminCategoriesPage />} />
+              <Route path="foydalanuvchilar" element={<AdminUsersPage />} />
+              <Route path="yozuvlar" element={<AdminBookingsPage />} />
+              <Route path="sozlamalar" element={<AdminSettingsPage />} />
             </Route>
           </Route>
 
