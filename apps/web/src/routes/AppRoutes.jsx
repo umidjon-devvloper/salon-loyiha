@@ -11,7 +11,9 @@ const SalonDetailPage = lazy(() => import('../pages/public/SalonDetailPage'));
 const MasterListPage = lazy(() => import('../pages/public/MasterListPage'));
 const MasterDetailPage = lazy(() => import('../pages/public/MasterDetailPage'));
 const SearchPage = lazy(() => import('../pages/public/SearchPage'));
-const BookingSoonPage = lazy(() => import('../pages/public/BookingSoonPage'));
+const BookingPage = lazy(() => import('../pages/client/BookingPage'));
+const BookingSuccessPage = lazy(() => import('../pages/client/BookingSuccessPage'));
+const MyBookingsPage = lazy(() => import('../pages/client/MyBookingsPage'));
 const NotFoundPage = lazy(() => import('../pages/public/NotFoundPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
@@ -26,7 +28,7 @@ function PageFallback() {
 
 /**
  * Route'lar bosqichma-bosqich to'ldiriladi:
- *   3-hafta — band qilish wizardi, 4-hafta — kabinetlar va admin.
+ *   4-hafta — mijoz profili, salon egasi kabineti va admin panel.
  */
 export function AppRoutes() {
   return (
@@ -47,8 +49,10 @@ export function AppRoutes() {
 
           {/* ── Auth kerak ────────────────────── */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/band-qilish/:masterId" element={<BookingSoonPage />} />
-            {/* 4-haftada: /profil, /kabinet, /admin */}
+            <Route path="/band-qilish/:masterId" element={<BookingPage />} />
+            <Route path="/band-qilish/tasdiq/:code" element={<BookingSuccessPage />} />
+            <Route path="/profil/yozuvlarim" element={<MyBookingsPage />} />
+            {/* 4-haftada: /profil, /profil/sevimlilar, /kabinet, /admin */}
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />
