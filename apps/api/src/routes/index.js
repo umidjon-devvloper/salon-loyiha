@@ -8,6 +8,7 @@ import publicRoutes from './public.routes.js';
 import ownerRoutes from './owner.routes.js';
 import bookingRoutes from './booking.routes.js';
 import adminRoutes from './admin.routes.js';
+import paymeRoutes from './payme.routes.js';
 
 const router = Router();
 
@@ -25,6 +26,11 @@ router.get('/health', (req, res) =>
 
 router.get('/cities', (req, res) => ok(res, listCities()));
 
+/* Payme webhooki dbReady dan OLDIN: unga javob HAR DOIM JSON-RPC formatida
+   bo'lishi kerak, bizning { success, message, code } formatimizda emas.
+   Baza yiqilganini controller o'zi tekshiradi va -32400 qaytaradi. */
+router.use('/payme', paymeRoutes);
+
 /* ── Shundan keyingi hamma narsa bazani talab qiladi ───────────── */
 router.use(dbReady);
 
@@ -39,6 +45,5 @@ router.use('/admin', adminRoutes);
 router.use('/', publicRoutes);
 
 // Keyingi bloklarda ulanadi:
-// router.use('/payme', paymeRoutes);
 
 export default router;

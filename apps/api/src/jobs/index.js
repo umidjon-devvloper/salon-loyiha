@@ -3,6 +3,7 @@ import cron from 'node-cron';
 import env from '../config/env.js';
 import { expireTop } from './expireTop.js';
 import { autoComplete } from './autoComplete.js';
+import { expireHolds } from './expireHolds.js';
 
 /**
  * Cron ishlari. Vaqt mintaqasi — Asia/Tashkent, aks holda "har kuni 01:00"
@@ -13,8 +14,10 @@ import { autoComplete } from './autoComplete.js';
  * berilmagan) jarayonda ishga tushadi.
  */
 const JOBS = [
-  { name: 'autoComplete', schedule: '0 1 * * *', run: autoComplete },
-  { name: 'expireTop', schedule: '5 0 * * *', run: expireTop },
+  { name: 'autoComplete', schedule: '0 1 * * *', run: autoComplete, nightly: true },
+  { name: 'expireTop', schedule: '5 0 * * *', run: expireTop, nightly: true },
+  // To'lanmagan slot real mijozni yo'qotadi — tez-tez tekshiriladi
+  { name: 'expireHolds', schedule: '*/2 * * * *', run: expireHolds, nightly: false },
 ];
 
 async function runSafely(job) {
@@ -45,5 +48,5 @@ export function startJobs() {
   });
 }
 
-export { expireTop, autoComplete, JOBS };
+export { expireTop, autoComplete, expireHolds, JOBS };
 export default startJobs;

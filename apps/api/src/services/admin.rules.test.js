@@ -68,14 +68,21 @@ test('muddati tugagan TOP hozirdan boshlab hisoblanadi', () => {
 
 // ── Cron ────────────────────────────────────────────────────────
 
-test('cron ishlari kunlik va tunda bajariladi', () => {
-  const names = JOBS.map((j) => j.name);
-  assert.deepEqual(names.sort(), ['autoComplete', 'expireTop']);
+test('kunlik ishlar tunda bajariladi', () => {
+  const names = JOBS.map((j) => j.name).sort();
+  assert.deepEqual(names, ['autoComplete', 'expireHolds', 'expireTop']);
 
-  for (const job of JOBS) {
+  for (const job of JOBS.filter((j) => j.nightly)) {
     const [minute, hour] = job.schedule.split(' ');
     assert.match(minute, /^\d+$/, `${job.name}: daqiqa aniq bo'lsin`);
     // Tunda: yuklama past, kunduzgi so'rovlarga xalaqit bermaydi
     assert.ok(Number(hour) < 6, `${job.name} tunda bajarilsin`);
   }
+});
+
+test('to\u2019lov holdini tekshirish tez-tez bajariladi', () => {
+  const job = JOBS.find((j) => j.name === 'expireHolds');
+  // Ushlab turilgan slot real mijozni yo'qotadi — kuniga bir marta yetmaydi
+  assert.match(job.schedule, /^\*\/[1-5] /);
+  assert.equal(job.nightly, false);
 });

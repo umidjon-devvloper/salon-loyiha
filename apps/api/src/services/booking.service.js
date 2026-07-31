@@ -1,4 +1,7 @@
-import { Salon, Master, Service, Booking, TimeOff } from '../models/index.js';
+import { Salon, Master, Service, Booking, TimeOff, Settings } from '../models/index.js';
+import env from '../config/env.js';
+import { calcBookingFee } from './bookingFee.js';
+import { checkoutUrl, toTiyin } from './payme/protocol.js';
 import ApiError from '../utils/ApiError.js';
 import { generateBookingCode } from '../utils/bookingCode.js';
 import { computeDaySlots } from './schedule.service.js';
@@ -335,6 +338,26 @@ export async function createBooking({
     confirmedAt: status === BOOKING_STATUS.CONFIRMED ? new Date() : null,
   };
 
+  /**
+   * Band qilish to'lovi FAQAT onlayn yozuvga qo'llanadi.
+   * Qo'lda yozuvda mijoz telefonda turibdi va Payme'ga yo'naltirib bo'lmaydi —
+   * u yerda pul salon bilan mijoz o'rtasida hal bo'ladi.
+   */
+  let payment = { required: false, amount: 0, checkoutUrl: null };
+
+  if (source === 'online' && status === BOOKING_STATUS.PENDING) {
+    const settings = await Settings.getGlobal();
+    const amount = calcBookingFee(settings, totalPrice);
+
+    if (amount > 0) {
+      doc.status = BOOKING_STATUS.AWAITING_PAYMENT;
+      // ⚠️ Shu paytdan slot BAND hisoblanadi — boshqalarga ko'rinmaydi
+      doc.holdUntil = new Date(Date.now() + settings.holdMinutes * 60_000);
+      doc.bookingFee = { amount, status: 'pending', method: 'payme' };
+      payment = { required: true, amount, checkoutUrl: null };
+    }
+  }
+
   // ── 2-qatlam
   // ⚠️ Bu yerda 11000 IKKI sababdan chiqadi: slot band (uniq_active_slot) yoki
   // kod takrorlandi. Ikkinchisi foydalanuvchi xatosi emas — jim qayta urinamiz.
@@ -342,7 +365,19 @@ export async function createBooking({
     try {
       const booking = await Booking.create({ ...doc, code: generateBookingCode() });
       await Salon.updateOne({ _id: salon._id }, { $inc: { bookingCount: 1 } });
-      return serializeBooking(booking.toObject(), { salon, master });
+
+      if (payment.required) {
+        payment.checkoutUrl = checkoutUrl({
+          baseUrl: env.PAYME_CHECKOUT_URL,
+          merchantId: env.PAYME_MERCHANT_ID,
+          accountField: env.PAYME_ACCOUNT_FIELD,
+          code: booking.code,
+          amountTiyin: toTiyin(payment.amount),
+          returnUrl: `${env.clientOrigins[0]}/band-qilish/tasdiq/${booking.code}`,
+        });
+      }
+
+      return { ...serializeBooking(booking.toObject(), { salon, master }), payment };
     } catch (err) {
       if (err.code !== 11000) throw err;
 
@@ -415,6 +450,11 @@ export function serializeBooking(booking, { salon, master } = {}) {
     clientPhone: booking.clientPhone,
     note: booking.note || '',
     cancelReason: booking.cancelReason ?? null,
+    bookingFee: {
+      amount: booking.bookingFee?.amount ?? 0,
+      status: booking.bookingFee?.status ?? 'none',
+    },
+    holdUntil: booking.holdUntil ?? null,
     createdAt: booking.createdAt,
     salon: salonDoc
       ? {
