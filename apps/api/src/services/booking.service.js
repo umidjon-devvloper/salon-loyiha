@@ -102,14 +102,25 @@ async function loadContext({ masterId, serviceIds }) {
   return { master, salon, services, totalDuration, totalPrice };
 }
 
-/** Bugungi kun uchun eng erta ruxsat etilgan vaqt: hozir + lead time */
-function earliestOf(dateStr, today, now) {
-  return dateStr === today ? now + MIN_LEAD_TIME_MIN : 0;
+/**
+ * Bugungi kun uchun eng erta ruxsat etilgan vaqt: hozir + lead time.
+ *
+ * Onlayn mijoz uchun lead time 60 daqiqa — salon egasi tayyorlanishi kerak.
+ * Qo'lda yozuvda esa 0: mijoz allaqachon telefonda turibdi va "yarim soatdan
+ * keyin kelaman" deydi. Bunga "iloji yo'q" deb bo'lmaydi.
+ */
+function earliestOf(dateStr, today, now, leadTimeMin = MIN_LEAD_TIME_MIN) {
+  return dateStr === today ? now + leadTimeMin : 0;
 }
 
 // ── Bo'sh vaqtlar ───────────────────────────────────────────────
 
-export async function getAvailableSlots({ masterId, dateStr, serviceIds }) {
+export async function getAvailableSlots({
+  masterId,
+  dateStr,
+  serviceIds,
+  leadTimeMin = MIN_LEAD_TIME_MIN,
+}) {
   const today = todayStr();
   assertBookableDate(dateStr, today);
 
@@ -141,7 +152,7 @@ export async function getAvailableSlots({ masterId, dateStr, serviceIds }) {
     bookings,
     totalDuration,
     step: SLOT_STEP_MIN,
-    earliest: earliestOf(dateStr, today, nowMin()),
+    earliest: earliestOf(dateStr, today, nowMin(), leadTimeMin),
   });
 
   const source = master.workingHours?.length ? master.workingHours : salon.workingHours;
@@ -265,6 +276,8 @@ export async function createBooking({
   clientName,
   clientPhone,
   note = '',
+  leadTimeMin = MIN_LEAD_TIME_MIN,
+  status = BOOKING_STATUS.PENDING,
 }) {
   const startMin = toMin(startTime);
   const today = todayStr();
@@ -281,7 +294,12 @@ export async function createBooking({
   }
 
   // ── 1-qatlam
-  const availability = await getAvailableSlots({ masterId, dateStr: date, serviceIds });
+  const availability = await getAvailableSlots({
+    masterId,
+    dateStr: date,
+    serviceIds,
+    leadTimeMin,
+  });
 
   if (!availability.isWorkingDay) {
     throw ApiError.conflict(availability.reason || 'Bu kun ish kuni emas', ERROR_CODES.SLOT_TAKEN);
@@ -313,7 +331,8 @@ export async function createBooking({
     clientName,
     clientPhone,
     note,
-    status: BOOKING_STATUS.PENDING,
+    status,
+    confirmedAt: status === BOOKING_STATUS.CONFIRMED ? new Date() : null,
   };
 
   // ── 2-qatlam

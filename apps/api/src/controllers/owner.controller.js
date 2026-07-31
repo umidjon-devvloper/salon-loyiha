@@ -1,4 +1,6 @@
 import * as ownerService from '../services/owner.service.js';
+import * as scheduleService from '../services/ownerSchedule.service.js';
+import * as bookingService from '../services/ownerBooking.service.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ok, created } from '../utils/response.js';
 
@@ -82,4 +84,53 @@ export const deleteMaster = asyncHandler(async (req, res) => {
 
 export const uploadMasterPhoto = asyncHandler(async (req, res) => {
   ok(res, await ownerService.uploadMasterPhoto(req.salon, req.params.id, req.file));
+});
+
+// ── Ish vaqti va dam olish kunlari ──────────────────────────────
+
+export const getSchedule = asyncHandler(async (req, res) => {
+  const masterId = req.validated?.query?.masterId ?? req.query.masterId ?? null;
+  ok(res, await scheduleService.getSchedule(req.salon, masterId));
+});
+
+export const updateSchedule = asyncHandler(async (req, res) => {
+  ok(res, await scheduleService.updateSchedule(req.salon, req.body));
+});
+
+export const resetMasterSchedule = asyncHandler(async (req, res) => {
+  ok(res, await scheduleService.resetMasterSchedule(req.salon, req.params.id));
+});
+
+export const listTimeOffs = asyncHandler(async (req, res) => {
+  ok(res, await scheduleService.listTimeOffs(req.salon, req.validated?.query ?? req.query));
+});
+
+export const createTimeOff = asyncHandler(async (req, res) => {
+  created(res, await scheduleService.createTimeOff(req.salon, req.body));
+});
+
+export const deleteTimeOff = asyncHandler(async (req, res) => {
+  ok(res, await scheduleService.deleteTimeOff(req.salon, req.params.id));
+});
+
+// ── Yozuvlar ────────────────────────────────────────────────────
+
+export const listBookings = asyncHandler(async (req, res) => {
+  ok(res, await bookingService.listBookings(req.salon, req.validated?.query ?? req.query));
+});
+
+export const getBooking = asyncHandler(async (req, res) => {
+  ok(res, await bookingService.getBooking(req.salon, req.params.id));
+});
+
+export const updateBookingStatus = asyncHandler(async (req, res) => {
+  ok(res, await bookingService.updateStatus(req.salon, req.params.id, req.body));
+});
+
+export const createManualBooking = asyncHandler(async (req, res) => {
+  created(res, await bookingService.createManualBooking(req.salon, req.body));
+});
+
+export const todaySummary = asyncHandler(async (req, res) => {
+  ok(res, await bookingService.todaySummary(req.salon));
 });
