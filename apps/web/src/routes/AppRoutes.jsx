@@ -15,6 +15,8 @@ const SearchPage = lazy(() => import('../pages/public/SearchPage'));
 const BookingPage = lazy(() => import('../pages/client/BookingPage'));
 const BookingSuccessPage = lazy(() => import('../pages/client/BookingSuccessPage'));
 const MyBookingsPage = lazy(() => import('../pages/client/MyBookingsPage'));
+const ProfilePage = lazy(() => import('../pages/client/ProfilePage'));
+const FavoritesPage = lazy(() => import('../pages/client/FavoritesPage'));
 
 const CabinetLayout = lazy(() => import('../components/layout/CabinetLayout'));
 const OwnerDashboard = lazy(() => import('../pages/owner/OwnerDashboard'));
@@ -70,8 +72,9 @@ export function AppRoutes() {
           <Route element={<ProtectedRoute />}>
             <Route path="/band-qilish/:masterId" element={<BookingPage />} />
             <Route path="/band-qilish/tasdiq/:code" element={<BookingSuccessPage />} />
+            <Route path="/profil" element={<ProfilePage />} />
             <Route path="/profil/yozuvlarim" element={<MyBookingsPage />} />
-            {/* 4-haftada: /profil, /profil/sevimlilar */}
+            <Route path="/profil/sevimlilar" element={<FavoritesPage />} />
           </Route>
 
           {/* ── Salon egasi kabineti ──────────── */}

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { BadgeCheck, MapPin, Star } from 'lucide-react';
+import { BadgeCheck, Heart, MapPin, Star } from 'lucide-react';
 import { formatPrice } from '@gozal/shared/utils/format';
 
 import { Badge, Skeleton } from '../ui';
+import { useFavoritesStore } from '../../store/favoritesStore';
 
 /** Rasm yo'q bo'lsa — salon nomining birinchi harfi bilan pushti fon */
 function CoverFallback({ name }) {
@@ -14,6 +15,9 @@ function CoverFallback({ name }) {
 }
 
 export function SalonCard({ salon }) {
+  const isFavorite = useFavoritesStore((state) => state.items.some((i) => i.id === salon.id));
+  const toggle = useFavoritesStore((state) => state.toggle);
+
   return (
     <Link
       to={`/salon/${salon.slug}`}
@@ -36,6 +40,21 @@ export function SalonCard({ salon }) {
             TOP
           </span>
         )}
+
+        {/* Kartochka havola bo'lgani uchun bosilganda o'tib ketmasligi kerak */}
+        <button
+          type="button"
+          aria-label={isFavorite ? 'Sevimlilardan olish' : 'Sevimlilarga qo\u2019shish'}
+          aria-pressed={isFavorite}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(salon);
+          }}
+          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-500 transition hover:bg-white hover:text-brand-600"
+        >
+          <Heart className={isFavorite ? 'h-4 w-4 fill-brand-500 text-brand-500' : 'h-4 w-4'} />
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col p-3 sm:p-4">

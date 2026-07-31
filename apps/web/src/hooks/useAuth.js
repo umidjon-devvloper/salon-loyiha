@@ -6,6 +6,7 @@ export function useAuth() {
   const user = useAuthStore((s) => s.user);
   const accessToken = useAuthStore((s) => s.accessToken);
   const setAuth = useAuthStore((s) => s.setAuth);
+  const setUser = useAuthStore((s) => s.setUser);
   const clear = useAuthStore((s) => s.logout);
 
   const logout = async () => {
@@ -23,6 +24,7 @@ export function useAuth() {
     isAuthenticated: !!accessToken && !!user,
     role: user?.role ?? null,
     setAuth,
+    setUser,
     logout,
   };
 }
