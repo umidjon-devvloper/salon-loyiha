@@ -22,7 +22,15 @@ function Gallery({ salon }) {
     <div>
       <div className="aspect-[16/9] overflow-hidden rounded-2xl bg-brand-50 sm:aspect-[21/9]">
         {main ? (
-          <img src={main} alt={salon.name} className="h-full w-full object-cover" />
+          <img
+            src={main}
+            alt={salon.name}
+            /* LCP elementi: lazy QILINMAYDI, aks holda eng katta rasm
+               kechikib yuklanadi va sahifa sekin ko'rinadi */
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-100 to-brand-200">
             <span className="text-5xl font-semibold text-brand-500">{salon.name[0]}</span>
@@ -42,7 +50,13 @@ function Gallery({ salon }) {
                 i === active ? 'border-brand-500' : 'border-transparent opacity-70'
               }`}
             >
-              <img src={image.thumb} alt="" className="h-full w-full object-cover" />
+              <img
+                src={image.thumb}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </button>
           ))}
         </div>

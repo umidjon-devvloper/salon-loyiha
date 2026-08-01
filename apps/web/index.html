@@ -11,10 +11,24 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Shrift render'ni to'smaydi: avval matn tizim shriftida chiqadi,
+         keyin Inter almashadi (display=swap). Sekin mobil internetda
+         bo'sh oq ekran ko'rsatishdan yaxshiroq -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <meta name="theme-color" content="#F4407D" />
+    <meta property="og:locale" content="uz_UZ" />
   </head>
   <body>
     <div id="root"></div>
