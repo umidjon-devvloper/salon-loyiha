@@ -51,6 +51,7 @@ export const ownerApi = {
   manualBooking: (body) => client.post('/owner/bookings/manual', body).then(unwrap),
 
   summary: () => client.get('/owner/summary').then(unwrap),
+  stats: () => client.get('/owner/stats').then(unwrap),
 };
 
 export const ownerKeys = {
@@ -61,6 +62,7 @@ export const ownerKeys = {
   timeOffs: ['owner-time-offs'],
   bookings: (params) => ['owner-bookings', params],
   summary: ['owner-summary'],
+  stats: ['owner-stats'],
 };
 
 export default ownerApi;

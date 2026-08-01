@@ -131,6 +131,10 @@ export const createManualBooking = asyncHandler(async (req, res) => {
   created(res, await bookingService.createManualBooking(req.salon, req.body));
 });
 
+export const stats = asyncHandler(async (req, res) => {
+  ok(res, await bookingService.getStats(req.salon));
+});
+
 export const todaySummary = asyncHandler(async (req, res) => {
   ok(res, await bookingService.todaySummary(req.salon));
 });

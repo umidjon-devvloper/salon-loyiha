@@ -1,7 +1,7 @@
 import { Booking } from '../models/index.js';
 import ApiError from '../utils/ApiError.js';
 import { createBooking } from './booking.service.js';
-import { toHHMM, todayStr } from '@gozal/shared/utils/time';
+import { addDays, toHHMM, todayStr } from '@gozal/shared/utils/time';
 import { BOOKING_STATUS, ACTIVE_BOOKING_STATUSES, ERROR_CODES } from '../config/constants.js';
 
 /**
@@ -189,7 +189,53 @@ export async function todaySummary(salon) {
   return { date: today, today: total, pending, upcoming };
 }
 
+/**
+ * Kabinet statistikasi: bugun / hafta / oy.
+ *
+ * Faqat YAKUNLANGAN yozuvlar summasi hisoblanadi — kutilayotgan yoki
+ * bekor qilingan yozuvni daromad deb ko'rsatish salon egasini chalg'itadi.
+ */
+export async function getStats(salon) {
+  const today = todayStr();
+  const weekAgo = addDays(today, -6); // bugun bilan birga 7 kun
+  const monthAgo = addDays(today, -29);
+
+  const countFor = async (from) => {
+    const rows = await Booking.aggregate([
+      { $match: { salon: salon._id, date: { $gte: from, $lte: today } } },
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 },
+          total: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+
+    const byStatus = Object.fromEntries(rows.map((r) => [r._id, r.count]));
+    const completed = rows.find((r) => r._id === BOOKING_STATUS.COMPLETED);
+
+    return {
+      total: rows.reduce((sum, r) => sum + r.count, 0),
+      confirmed: byStatus[BOOKING_STATUS.CONFIRMED] || 0,
+      completed: byStatus[BOOKING_STATUS.COMPLETED] || 0,
+      cancelled: byStatus[BOOKING_STATUS.CANCELLED] || 0,
+      noShow: byStatus[BOOKING_STATUS.NO_SHOW] || 0,
+      revenue: completed?.total || 0,
+    };
+  };
+
+  const [day, week, month] = await Promise.all([
+    countFor(today),
+    countFor(weekAgo),
+    countFor(monthAgo),
+  ]);
+
+  return { today: day, week, month };
+}
+
 export default {
+  getStats,
   listBookings,
   getBooking,
   updateStatus,

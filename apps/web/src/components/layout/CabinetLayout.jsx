@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import {
+  BarChart3,
   CalendarDays,
   CalendarOff,
   Clock,
@@ -19,6 +20,7 @@ const LINKS = [
   { to: '/kabinet/xizmatlar', label: 'Xizmatlar', icon: Scissors },
   { to: '/kabinet/mutaxassislar', label: 'Mutaxassislar', icon: Users },
   { to: '/kabinet/dam-olish', label: 'Dam olish', icon: CalendarOff },
+  { to: '/kabinet/statistika', label: 'Statistika', icon: BarChart3 },
   { to: '/kabinet/salon', label: 'Salon', icon: Store },
 ];
 

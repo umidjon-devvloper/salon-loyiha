@@ -139,6 +139,7 @@ router.delete(
 // ── Yozuvlar ────────────────────────────────────────────────────
 
 router.get('/summary', ownerOfSalon, ctrl.todaySummary);
+router.get('/stats', ownerOfSalon, ctrl.stats);
 router.get(
   '/bookings',
   ownerOfSalon,

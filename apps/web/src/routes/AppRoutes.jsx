@@ -12,6 +12,7 @@ const SalonDetailPage = lazy(() => import('../pages/public/SalonDetailPage'));
 const MasterListPage = lazy(() => import('../pages/public/MasterListPage'));
 const MasterDetailPage = lazy(() => import('../pages/public/MasterDetailPage'));
 const SearchPage = lazy(() => import('../pages/public/SearchPage'));
+const AboutPage = lazy(() => import('../pages/public/AboutPage'));
 const OfferPage = lazy(() => import('../pages/public/LegalPage'));
 const PrivacyPage = lazy(() =>
   import('../pages/public/LegalPage').then((m) => ({ default: m.PrivacyPage })),
@@ -31,6 +32,7 @@ const MastersPage = lazy(() => import('../pages/owner/MastersPage'));
 const SchedulePage = lazy(() => import('../pages/owner/SchedulePage'));
 const TimeOffPage = lazy(() => import('../pages/owner/TimeOffPage'));
 const OwnerBookingsPage = lazy(() => import('../pages/owner/OwnerBookingsPage'));
+const OwnerStatsPage = lazy(() => import('../pages/owner/OwnerStatsPage'));
 
 const AdminLayout = lazy(() => import('../components/layout/AdminLayout'));
 const AdminDashboard = lazy(() => import('../pages/admin/AdminDashboard'));
@@ -71,6 +73,7 @@ export function AppRoutes() {
           <Route path="/qidiruv" element={<SearchPage />} />
 
           {/* Payme shartnomasi uchun majburiy */}
+          <Route path="/biz-haqimizda" element={<AboutPage />} />
           <Route path="/oferta" element={<OfferPage />} />
           <Route path="/maxfiylik" element={<PrivacyPage />} />
 
@@ -97,6 +100,7 @@ export function AppRoutes() {
               <Route path="jadval" element={<SchedulePage />} />
               <Route path="dam-olish" element={<TimeOffPage />} />
               <Route path="yozuvlar" element={<OwnerBookingsPage />} />
+              <Route path="statistika" element={<OwnerStatsPage />} />
             </Route>
           </Route>
 

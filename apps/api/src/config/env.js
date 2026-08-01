@@ -18,6 +18,13 @@ const envSchema = z.object({
   MAX_UPLOAD_MB: z.coerce.number().int().positive().default(5),
 
   TIMEZONE: z.string().default('Asia/Tashkent'),
+
+  // Mobil ilova (v1 da bo'sh turadi, ilova chiqqanda to'ldiriladi)
+  APP_MIN_VERSION: z.string().default('1.0.0'),
+  APP_LATEST_VERSION: z.string().default('1.0.0'),
+  APP_STORE_URL: z.string().default(''),
+  PLAY_STORE_URL: z.string().default(''),
+  APP_MAINTENANCE: z.coerce.boolean().default(false),
   SLOT_STEP_MIN: z.coerce.number().int().positive().default(15),
   MIN_LEAD_TIME_MIN: z.coerce.number().int().nonnegative().default(60),
   MAX_ADVANCE_DAYS: z.coerce.number().int().positive().default(60),

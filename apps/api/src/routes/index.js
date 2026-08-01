@@ -10,6 +10,7 @@ import bookingRoutes from './booking.routes.js';
 import adminRoutes from './admin.routes.js';
 import paymeRoutes from './payme.routes.js';
 import seoRoutes from './seo.routes.js';
+import appRoutes from './app.routes.js';
 
 const router = Router();
 
@@ -31,6 +32,9 @@ router.get('/cities', (req, res) => ok(res, listCities()));
    bo'lishi kerak, bizning { success, message, code } formatimizda emas.
    Baza yiqilganini controller o'zi tekshiradi va -32400 qaytaradi. */
 router.use('/payme', paymeRoutes);
+
+/* Ilova versiyasi — bazaga tegmaydi, shuning uchun dbReady dan oldin */
+router.use('/app', appRoutes);
 router.use('/', seoRoutes);
 
 /* ── Shundan keyingi hamma narsa bazani talab qiladi ───────────── */
