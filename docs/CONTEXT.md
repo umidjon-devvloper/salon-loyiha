@@ -1,7 +1,7 @@
 # PROJECT CONTEXT — Go'zal Ayol
 
 > Bu fayl loyihaning yagona ma'lumot manbasi. Har bir yangi chat shu fayldan kontekst oladi.
-> Oxirgi yangilanish: 2026-07-30
+> Oxirgi yangilanish: 2026-08-01
 
 ---
 
@@ -43,6 +43,13 @@ Go'zallik salonlari va mutaxassislar uchun **onlayn band qilish (booking) platfo
 | **Muddat** | 6–7 hafta |
 | **Qo'llab-quvvatlash** | Topshirilgandan keyin 1 oy bepul — faqat bug fix va server muammolari. Yangi funksiya, dizayn o'zgarishi, kontent kiritish kirmaydi |
 
+> ⚠️ **Mobil ilova qamrovi o'zgardi (2026-08-01).** `08-mobile.md` da "faqat
+> mijoz" deb yozilgan edi; mijoz salon egasi uchun ham kerakligini aytdi.
+> To'liq kabinet ~90 soat qo'shardi, shuning uchun **qisqartirilgan** variant
+> qabul qilindi: ilovada faqat kunlik ish (yozuvlar, tasdiqlash, qo'lda
+> yozuv), jadval va xizmatlar webda qoladi. Bu ~30 soat.
+> **Narx qayta kelishilishi kerak** — ilova bahosi $2 000–2 400 dan oshadi.
+
 **Chegirma qoidasi:** chegirma har doim sabab bilan beriladi ("birinchi hamkorlik uchun", "portfolio sharti bilan"). Sababsiz chegirma mijozga "yana tushirsa bo'ladi" degan signal beradi.
 
 ---
@@ -55,7 +62,12 @@ Go'zallik salonlari va mutaxassislar uchun **onlayn band qilish (booking) platfo
 
 **Infra:** VPS Ubuntu 22.04 · Nginx reverse proxy · Let's Encrypt · rasmlar server diskida `/uploads`
 
-**Mobil ilova (React Native + Expo):** ✅ **Qaror qilingan** — batafsil `08-mobile.md`. Faqat **mijoz** uchun (salon egasi va admin webdan ishlaydi). ~260 soat, +$2 000–2 400. Bosqichlash: v1 web topshirilgach alohida bosqich.
+**Mobil ilova (React Native + Expo):** 🔨 **Yozilmoqda** — `apps/mobile`, batafsil `08-mobile.md` va `apps/mobile/README.md`.
+**Mijoz + salon egasi** uchun (admin faqat webda). Egasiga qisqartirilgan kabinet: yozuvlar, tasdiqlash, qo'lda yozuv.
+Jadval, xizmatlar, salon profili va statistika webda qoladi.
+
+> ⚠️ Reja bo'yicha ilova v1 web **topshirilgandan keyin** boshlanishi kerak edi (B variant).
+> Amalda parallel boshlandi (C variant), ya'ni web hali topshirilmagan holda ikki front ochiq.
 
 **Umumiy loyiha:** web $2 000–2 200 + ilova $2 000–2 400 = **$4 000 – 4 600**
 
@@ -231,6 +243,8 @@ bookingFee: {
 | **Telefon orqali kelgan mijozlar tizimga kirmaydi** | `POST /owner/bookings/manual` — qo'lda yozuv qo'shish. **Bu funksiyasiz platforma ishlamaydi**: jadval real bo'lmasa, onlayn slotlar yolg'on chiqadi |
 | **Mijoz yangi funksiya so'raydi** | v1/v2 ro'yxati shartnomada. Yangi so'rov = alohida narx |
 | **Mijoz kontentni (rasm, matn) bermaydi** | Hafta 0 ro'yxati. Kelmasa demo ma'lumot bilan topshiriladi |
+| **Payme shartnomasi kechikmoqda** | Kod tayyor, lekin kalitsiz sandbox testini o'tkazib bo'lmaydi. Shartnoma 1–2 hafta + production 2–5 kun. Ariza **hoziroq** berilishi kerak, aks holda tayyor kod bilan kutib o'tiriladi |
+| **Ikki front parallel ochiq** | Web topshirilmagan holda mobil ilova boshlandi. Sandbox testidan tuzatish chiqsa, ikki joyda ish bo'ladi |
 | **Avansga ishonchsizlik** | Bazada salon kam bo'lsa, odam oldindan pul tashlamaydi. Salon soni to'plangunicha avans foizini past ushlash kerak |
 
 ---
@@ -250,6 +264,8 @@ bookingFee: {
 - **Settlement moduli kerakmi?** → Yo'q
 - **Geolokatsiya?** → Yo'q, tuman filtri yetarli
 - **SMS OTP?** → Yo'q, telefon + parol
+- **Mobil ilova kimga?** → **Mijoz + salon egasi** (admin webda). Egasiga qisqartirilgan kabinet
+- **Qo'lda yozuvda mijoz kim?** → `booking.client` nullable + `source: 'online' | 'manual'`
 
 ### ⏳ Kodni to'xtatmaydi, lekin ishga tushirishdan oldin kerak
 
@@ -271,34 +287,69 @@ bookingFee: {
 
 ## 13. Hozirgi holat
 
+**Kod:** 30 commit, ~24 000 qator, 248 test o'tadi.
+
 | Bosqich | Holat |
 |---|---|
-| Texnik hujjatlar (7 ta `.md` + CONTEXT) | ✅ Tayyor |
-| Barcha arxitektura va biznes qarorlari | ✅ Qabul qilingan |
-| Payme shartnomasi | ⏳ Mijoz ariza berishi kerak |
-| Ommaviy oferta matni | ⏳ Mijozdan |
-| 1-hafta — monorepo, modellar, auth, seed, dizayn tizimi | ✅ Tayyor |
-| 2-hafta — katalog API + owner CRUD + katalog sahifalari | ✅ Tayyor |
-| 3-hafta — booking dvijogi | 🔨 **Ishlanmoqda** |
+| Texnik hujjatlar (9 ta `.md` + CONTEXT) | ✅ |
+| API — auth, katalog, booking, owner, admin, Payme, cron | ✅ yozilgan |
+| Web — katalog, band qilish, kabinet, admin panel | ✅ yozilgan |
+| Mobil — mijoz oqimi to'liq | ✅ yozilgan |
+| Mobil — salon egasi (qisqartirilgan) | ✅ yozilgan |
+| Deploy hujjatlari, SEO, zaxira | ✅ |
+| Payme sandbox testlari | ⏳ **kalit yo'q** |
+| Ommaviy oferta matni | ⏳ mijozdan |
+| Do'konlarga chiqarish | ⏳ akkaunt va grafika kerak |
 
-**Keyingi qadam:** salon egasi jadvali (`PUT /owner/schedule`), dam olish kunlari,
-kabinet yozuvlari va qo'lda yozuv; keyin frontend band qilish wizardi.
+### ⚠️ Tekshirilmagan narsalar
+
+Kod ishlab chiqish muhitida yozilgan: u yerda **MongoDB ham, brauzer ham,
+Expo ham yo'q**. Tekshirilgani — build, lint, unit testlar va sintaksis.
+
+Quyidagilar hali **bir marta ham ishlamagan**:
+
+| Nima | Nima uchun muhim |
+|---|---|
+| Butun web UI | Kalendar, jadval ekrani, mobil filtr oynasi |
+| Butun mobil ilova (38 fayl) | Metro `packages/shared` ni topishi, NativeWind |
+| Parallel yozuv himoyasi | Unique partial index — 9-test holati |
+| Payme webhooki | Sandbox idempotentlikni belgi-belgi tekshiradi |
+| Rasm yuklash oqimi | sharp konveyeri alohida tekshirilgan, endpoint yo'q |
+
+**Keyingi qadam:** Umidjon lokalda uchidan-uchiga tekshiradi.
 
 ---
 
-## 14. Ish rejasi (6–7 hafta)
+## 14. Ish rejasi
 
-| Hafta | Nima |
+### v1 web (reja: 6–7 hafta)
+
+| Hafta | Nima | Holat |
+|---|---|---|
+| 1 | Backend setup, modellar, auth, seed · Frontend setup, dizayn tizimi | ✅ |
+| 2 | Katalog, owner CRUD, rasm yuklash · Katalog sahifalari | ✅ |
+| 3 | ⭐ Booking dvijogi, 14 test holati, band qilish wizardi | ✅ |
+| 4 | Kabinetlar, admin panel, cron | ✅ |
+| 5 | Payme Merchant API, hold logikasi | ✅ kod · ⏳ sandbox |
+| 6 | Xavfsizlik auditi, SEO, deploy hujjatlari, qo'llanma | ✅ |
+| 7 | Deploy, SSL, backup, topshirish | ⏳ |
+
+### Mobil ilova (alohida bosqich)
+
+| Modul | Holat |
 |---|---|
-| 1 | Backend setup, modellar, indekslar, auth, seed · Frontend setup, dizayn tizimi, layout, kirish/ro'yxat |
-| 2 | Katalog: salon/usta/xizmat CRUD, filtr, qidiruv · Bosh sahifa, ro'yxatlar, profil sahifalari |
-| 3 | ⭐ **Booking dvijogi** — slot hisoblash, availability API, band qilish wizard, 14 ta test holati |
-| 4 | Kabinetlar: salon egasi (jadval, yozuvlar, qo'lda yozuv) + admin panel + cron |
-| 5 | Payme: Merchant API, hold logikasi, sandbox testlari |
-| 6 | Payme production, refund, sayqallash, responsive tekshiruv |
-| 7 | Deploy, SSL, backup, SEO minimum, mijozga o'qitish, topshirish |
+| Expo, Router, NativeWind, monorepo, auth | ✅ |
+| Katalog, qidiruv, salon va usta ekranlari | ✅ |
+| Band qilish oqimi, slot picker, Payme WebView | ✅ |
+| Yozuvlarim, sevimlilar, profil, hisobni o'chirish | ✅ |
+| Salon egasi: yozuvlar, qo'lda yozuv | ✅ |
+| Majburiy yangilanish, push token, EAS | ✅ |
+| Qurilmada tekshirish | ⏳ |
+| Do'konlarga chiqarish | ⏳ |
 
-> ⚠️ **3-hafta muqaddas.** Kechikish bo'lsa admin panel yoki dizayn qisqartiriladi, booking dvijogi hech qachon.
+> ⚠️ **7-hafta boshlanmagan va boshlanolmaydi:** deploy uchun domen, Payme
+> production kaliti va oferta matni kerak — uchalasi ham mijozdan.
+> Topshirish sanasi endi Payme shartnomasiga bog'liq, kod yozish tezligiga emas.
 
 ---
 
