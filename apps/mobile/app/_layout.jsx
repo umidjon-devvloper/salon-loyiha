@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useAuthStore } from '../store/authStore';
+import { usePushToken } from '../hooks/usePushToken';
+import { AppGate } from '../components/AppGate';
 import '../global.css';
 
 /**
@@ -24,6 +26,21 @@ const queryClient = new QueryClient({
   },
 });
 
+/** Push token va versiya tekshiruvi provider ICHIDA bo'lishi kerak */
+function AppContent() {
+  usePushToken();
+
+  return (
+    <AppGate>
+      <StatusBar style="dark" />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(auth)" options={{ presentation: 'modal' }} />
+      </Stack>
+    </AppGate>
+  );
+}
+
 export default function RootLayout() {
   const hydrate = useAuthStore((s) => s.hydrate);
 
@@ -34,11 +51,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(auth)" options={{ presentation: 'modal' }} />
-        </Stack>
+        <AppContent />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

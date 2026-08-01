@@ -61,4 +61,5 @@ Jadvalni esa oyiga bir marta, o'tirib to'ldiradi — katta ekran qulayroq.
 - [x] Yozuvlarim, sevimlilar, profil, sozlamalar
 - [x] Salon egasi: yozuvlar, tasdiqlash, qo'lda yozuv
 - [x] Hisobni o'chirish (Apple talabi)
-- [ ] EAS build va do'konlarga chiqarish
+- [x] Majburiy yangilanish, push token, EAS konfiguratsiyasi
+- [ ] Do'konlarga chiqarish — akkaunt va grafika kerak, `STORE.md`
