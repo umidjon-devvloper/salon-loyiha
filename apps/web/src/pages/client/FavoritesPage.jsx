@@ -2,11 +2,15 @@ import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { SalonCard } from '../../components/catalog/SalonCard';
 import { Button, EmptyState } from '../../components/ui';
 import { useFavoritesStore } from '../../store/favoritesStore';
 
 export function FavoritesPage() {
+  // Shaxsiy sahifalar qidiruvga chiqmasin
+  usePageMeta({ title: 'Sevimlilar', noIndex: true });
+
   const items = useFavoritesStore((state) => state.items);
 
   return (

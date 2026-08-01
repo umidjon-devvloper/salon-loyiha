@@ -16,7 +16,10 @@ import { ERROR_CODES } from '../config/constants.js';
  * `req.validated` ga ham yoziladi.
  */
 export function validate(schemas) {
-  return (req, _res, next) => {
+  /* Nom ataylab qo'yilgan: express router stack'ida ko'rinadi. Shu tufayli
+     `routes/guards.test.js` yangi endpointda validatsiya unutilganini ushlaydi,
+     va xato stack trace'ida ham anonim funksiya emas, `validate` chiqadi. */
+  return function validate(req, _res, next) {
     try {
       req.validated = req.validated || {};
 

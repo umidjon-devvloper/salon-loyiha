@@ -1,0 +1,17 @@
+User-agent: *
+
+# Shaxsiy va boshqaruv sahifalari indekslanmaydi
+Disallow: /profil
+Disallow: /kabinet
+Disallow: /admin
+Disallow: /band-qilish
+Disallow: /tolov
+Disallow: /kirish
+Disallow: /royxatdan-otish
+
+# Qidiruv natijalari: cheksiz ko'p va qiymatsiz sahifalar
+Disallow: /qidiruv
+
+Allow: /
+
+Sitemap: https://REPLACE_DOMAIN/sitemap.xml

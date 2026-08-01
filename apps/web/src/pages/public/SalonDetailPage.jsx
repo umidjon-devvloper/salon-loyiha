@@ -7,6 +7,7 @@ import { formatDurationUz, WEEKDAYS_UZ } from '@gozal/shared/utils/time';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { Badge, Button, Card, CardBody, ErrorState, Skeleton } from '../../components/ui';
 
 /** Bugungi kun jadvalda ajratib ko'rsatiladi */
@@ -101,6 +102,15 @@ export function SalonDetailPage() {
   } = useQuery({
     queryKey: catalogKeys.salon(slug),
     queryFn: () => catalogApi.salon(slug),
+  });
+
+  // Salon sahifasi — asosiy SEO kirish nuqtasi: odamlar salon nomini qidiradi
+  usePageMeta({
+    title: salon ? `${salon.name} — ${salon.district}` : 'Salon',
+    description: salon
+      ? `${salon.name}, ${salon.city} ${salon.district}. ${salon.serviceCount} ta xizmat, ish vaqti va bo'sh vaqtlar. Onlayn band qiling.`
+      : undefined,
+    image: salon?.cover || undefined,
   });
 
   if (isPending) {

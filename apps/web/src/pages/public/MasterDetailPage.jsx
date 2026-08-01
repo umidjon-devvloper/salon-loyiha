@@ -7,6 +7,7 @@ import { formatDurationUz, WEEKDAYS_UZ } from '@gozal/shared/utils/time';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { Badge, Button, Card, CardBody, ErrorState, Skeleton } from '../../components/ui';
 
 export function MasterDetailPage() {
@@ -22,6 +23,14 @@ export function MasterDetailPage() {
   } = useQuery({
     queryKey: catalogKeys.master(id),
     queryFn: () => catalogApi.master(id),
+  });
+
+  usePageMeta({
+    title: master ? master.fullName : 'Mutaxassis',
+    description: master
+      ? `${master.fullName}${master.salon ? ` — ${master.salon.name}` : ''}. Xizmatlar, narxlar va bo'sh vaqtlar.`
+      : undefined,
+    image: master?.photo || undefined,
   });
 
   if (isPending) {

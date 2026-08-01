@@ -8,6 +8,7 @@ import { formatPhone, formatPrice } from '@gozal/shared/utils/format';
 
 import { bookingApi, bookingKeys } from '../../api/booking.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import {
   Button,
   Card,
@@ -100,6 +101,9 @@ function BookingCard({ booking, onCancel }) {
 }
 
 export function MyBookingsPage() {
+  // Shaxsiy sahifalar qidiruvga chiqmasin
+  usePageMeta({ title: 'Yozuvlarim', noIndex: true });
+
   const [tab, setTab] = useState('upcoming');
   const [toCancel, setToCancel] = useState(null);
   const queryClient = useQueryClient();

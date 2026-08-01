@@ -9,6 +9,7 @@ import { formatPrice, formatServicePrice } from '@gozal/shared/utils/format';
 import { bookingApi } from '../../api/booking.api';
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { StepBar } from '../../components/booking/StepBar';
 import { SlotPicker } from '../../components/booking/SlotPicker';
 import {
@@ -27,6 +28,9 @@ const servedBy = (service, masterId) =>
   !service.masters?.length || service.masters.includes(masterId);
 
 export function BookingPage() {
+  // Shaxsiy sahifalar qidiruvga chiqmasin
+  usePageMeta({ title: 'Band qilish', noIndex: true });
+
   const { masterId: initialMasterId } = useParams();
   const [params] = useSearchParams();
   const navigate = useNavigate();

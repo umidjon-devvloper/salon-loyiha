@@ -7,6 +7,7 @@ import { formatDurationUz } from '@gozal/shared/utils/time';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { SalonCard, SalonCardSkeleton } from '../../components/catalog/SalonCard';
 import { MasterCard } from '../../components/catalog/MasterCard';
 import { EmptyState, ErrorState } from '../../components/ui';
@@ -28,6 +29,9 @@ export function SearchPage() {
   }, [debounced, setParams]);
 
   const q = debounced.trim();
+
+  // Qidiruv natijalari indekslanmasin — cheksiz ko'p va qiymatsiz sahifalar
+  usePageMeta({ title: q ? `"${q}" bo'yicha qidiruv` : 'Qidiruv', noIndex: true });
   const enabled = q.length >= 2;
 
   const { data, isPending, isError, refetch } = useQuery({

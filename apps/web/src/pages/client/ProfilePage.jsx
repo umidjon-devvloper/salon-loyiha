@@ -8,10 +8,14 @@ import { formatPhone } from '@gozal/shared/utils/format';
 import { authApi } from '../../api/auth.api';
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { Button, Card, CardBody, Input, PasswordInput, Select } from '../../components/ui';
 import { useAuth } from '../../hooks/useAuth';
 
 export function ProfilePage() {
+  // Shaxsiy sahifalar qidiruvga chiqmasin
+  usePageMeta({ title: 'Profil', noIndex: true });
+
   const { user, logout, setUser } = useAuth();
   const queryClient = useQueryClient();
 

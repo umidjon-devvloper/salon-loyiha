@@ -9,6 +9,7 @@ import ownerRoutes from './owner.routes.js';
 import bookingRoutes from './booking.routes.js';
 import adminRoutes from './admin.routes.js';
 import paymeRoutes from './payme.routes.js';
+import seoRoutes from './seo.routes.js';
 
 const router = Router();
 
@@ -30,6 +31,7 @@ router.get('/cities', (req, res) => ok(res, listCities()));
    bo'lishi kerak, bizning { success, message, code } formatimizda emas.
    Baza yiqilganini controller o'zi tekshiradi va -32400 qaytaradi. */
 router.use('/payme', paymeRoutes);
+router.use('/', seoRoutes);
 
 /* ── Shundan keyingi hamma narsa bazani talab qiladi ───────────── */
 router.use(dbReady);

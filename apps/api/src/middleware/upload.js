@@ -31,7 +31,9 @@ const multerUpload = multer({
 
 /** Multer xatolarini loyihaning umumiy xato formatiga o'giradi */
 function wrap(handler) {
-  return (req, res, next) =>
+  // Nom `guards.test.js` uchun: rasm yuklaydigan marshrutlar body
+  // validatsiyasidan istisno qilinadi va ular shu nom bilan aniqlanadi
+  return function uploadMiddleware(req, res, next) {
     handler(req, res, (err) => {
       if (!err) return next();
 
@@ -54,6 +56,7 @@ function wrap(handler) {
 
       return next(err);
     });
+  };
 }
 
 /** Bitta rasm: avatar, usta surati */

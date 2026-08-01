@@ -13,6 +13,19 @@ const base = {
   skip: () => env.isDev,
 };
 
+/**
+ * Payme webhooki chegaraga tushmaydi.
+ *
+ * Ikki sabab:
+ *  1. Payme bitta IP'dan ketma-ket ko'p so'rov yuboradi (Check → Create →
+ *     Perform), sandbox testlarida esa bu yanada zich bo'ladi
+ *  2. Chegaraga tushsa u bizning { success: false } formatimizni oladi va
+ *     tushunmaydi — unga har doim JSON-RPC kerak
+ *
+ * Himoya bu yerda rate limit emas, Basic auth (`checkAuth`).
+ */
+const skipPayme = (req) => req.path.startsWith('/payme/');
+
 /** Login / register: 10 urinish / 15 daqiqa / IP */
 export const authLimiter = rateLimit({
   ...base,
@@ -32,6 +45,7 @@ export const bookingLimiter = rateLimit({
 /** Umumiy API chegarasi */
 export const apiLimiter = rateLimit({
   ...base,
+  skip: (req) => env.isDev || skipPayme(req),
   windowMs: 60 * 1000,
   limit: 300,
   handler: jsonHandler("Juda ko'p so'rov. Bir ozdan keyin qayta urinib ko'ring"),

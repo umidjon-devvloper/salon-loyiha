@@ -4,6 +4,7 @@ import { CalendarCheck, Clock, ShieldCheck, Wallet } from 'lucide-react';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { CategoryGrid } from '../../components/catalog/CategoryGrid';
 import { SearchBar } from '../../components/catalog/SearchBar';
 import { SalonCard, SalonCardSkeleton } from '../../components/catalog/SalonCard';
@@ -29,6 +30,11 @@ const benefits = [
 ];
 
 export function HomePage() {
+  usePageMeta({
+    description:
+      "Toshkentdagi go'zallik salonlari va mutaxassislar. Manikyur, soch turmagi, kosmetologiya va boshqa xizmatlarga onlayn navbat oling.",
+  });
+
   const { data: categories = [], isPending: categoriesLoading } = useQuery({
     queryKey: catalogKeys.categories,
     queryFn: catalogApi.categories,

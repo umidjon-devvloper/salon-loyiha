@@ -4,6 +4,7 @@ import { SearchX } from 'lucide-react';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { FilterPanel } from '../../components/catalog/FilterPanel';
 import { Pagination } from '../../components/catalog/Pagination';
 import { SalonCard, SalonCardSkeleton } from '../../components/catalog/SalonCard';
@@ -34,6 +35,13 @@ export function SalonListPage() {
 
   const category = slug || filters.category || '';
   const categoryName = categories.find((c) => c.slug === category)?.name;
+
+  usePageMeta({
+    title: categoryName || 'Salonlar',
+    description: categoryName
+      ? `${categoryName} xizmati bo'yicha salonlar va narxlar. Bo'sh vaqtni ko'rib, onlayn band qiling.`
+      : "Go'zallik salonlari katalogi: narxlar, ish vaqti va bo'sh vaqtlar.",
+  });
 
   const params = {
     category: category || undefined,

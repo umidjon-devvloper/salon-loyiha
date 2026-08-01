@@ -3,6 +3,7 @@ import { UserSearch } from 'lucide-react';
 
 import { catalogApi, catalogKeys } from '../../api/catalog.api';
 import { Container } from '../../components/layout/Container';
+import { usePageMeta } from '../../hooks/usePageMeta';
 import { FilterPanel } from '../../components/catalog/FilterPanel';
 import { Pagination } from '../../components/catalog/Pagination';
 import { MasterCard, MasterCardSkeleton } from '../../components/catalog/MasterCard';
@@ -13,6 +14,11 @@ const PER_PAGE = 12;
 
 export function MasterListPage() {
   const [filters, patch, reset] = useFilterParams();
+
+  usePageMeta({
+    title: 'Mutaxassislar',
+    description: "Go'zallik mutaxassislari: tajriba, xizmatlar va bo'sh vaqtlar.",
+  });
 
   const params = {
     category: filters.category,
