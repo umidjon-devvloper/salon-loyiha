@@ -1,30 +1,21 @@
 /**
  * Design tokens — single source of truth.
- * Consumed by apps/web `tailwind.config.js` and later by apps/mobile (NativeWind).
+ *
+ * The values live in `tokens.cjs`, not here: the mobile `tailwind.config.js`
+ * is CommonJS and cannot `require` an ESM package. A .cjs file is readable
+ * from both sides, so web and mobile share one file instead of drifting.
+ *
  * Never hardcode brand colors anywhere else.
  */
+import tokens from './tokens.cjs';
 
-export const colors = {
-  brand: {
-    50: '#FFF1F5',
-    100: '#FFE4EC',
-    200: '#FFC9DA',
-    300: '#FF9EBE',
-    400: '#FF6B9D',
-    500: '#F4407D', // primary
-    600: '#DB2777', // buttons
-    700: '#BE185D', // headings
-  },
-};
+export const colors = tokens.colors;
 
-export const borderRadius = {
-  xl: '0.875rem', // buttons, inputs
-  '2xl': '1.25rem', // cards
-};
+/** Web uses rem; React Native has no rem, so mobile reads `borderRadiusPx` */
+export const borderRadius = tokens.borderRadius.rem;
+export const borderRadiusPx = tokens.borderRadius.px;
 
-export const fontFamily = {
-  sans: ['Inter', 'system-ui', 'sans-serif'],
-};
+export const fontFamily = tokens.fontFamily;
 
 /** Booking status → badge color family */
 export const statusColor = {

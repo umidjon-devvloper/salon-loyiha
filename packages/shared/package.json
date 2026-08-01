@@ -9,7 +9,8 @@
     "./theme": "./src/theme.js",
     "./utils/*": "./src/utils/*.js",
     "./schemas/*": "./src/schemas/*.js",
-    "./api/*": "./src/api/*.js"
+    "./api/*": "./src/api/*.js",
+    "./tokens": "./src/tokens.cjs"
   },
   "scripts": {
     "test": "node --test"
