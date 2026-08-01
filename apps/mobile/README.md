@@ -44,8 +44,8 @@ Alohida:
 - [x] Kirish / ro'yxatdan o'tish ekranlari, UI primitivlari
 - [x] Qidiruv, katalog va filtr (bottom sheet)
 - [x] Salon, kategoriya va mutaxassis ekranlari
-- [ ] Band qilish wizardi + slot picker
-- [ ] Payme WebView + deep link
+- [x] Band qilish oqimi (2 qadam) + kunlar lentasi + slot grid
+- [x] Payme WebView + deep link + holat tekshiruvi
 - [ ] Yozuvlarim, sevimlilar, profil
 - [ ] Salon egasi: yozuvlar, tasdiqlash, qo'lda yozuv
 - [ ] Hisobni o'chirish (Apple talabi)
