@@ -41,7 +41,7 @@ Alohida:
 - [x] Expo + Router + NativeWind + monorepo
 - [x] Auth store (SecureStore), API klient
 - [x] Tab navigatsiya, bosh sahifa, kategoriyalar, salon kartochkasi
-- [ ] Kirish / ro'yxatdan o'tish ekranlari
+- [x] Kirish / ro'yxatdan o'tish ekranlari, UI primitivlari
 - [ ] Qidiruv va filtrlar
 - [ ] Salon va mutaxassis ekranlari
 - [ ] Band qilish wizardi + slot picker
