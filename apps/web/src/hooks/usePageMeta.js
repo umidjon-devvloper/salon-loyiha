@@ -16,7 +16,9 @@ function setTag(selector, attrs) {
   let tag = document.head.querySelector(selector);
 
   if (!tag) {
-    tag = document.createElement(attrs.property ? 'meta' : selector.startsWith('link') ? 'link' : 'meta');
+    tag = document.createElement(
+      attrs.property ? 'meta' : selector.startsWith('link') ? 'link' : 'meta',
+    );
     for (const [key, value] of Object.entries(attrs)) {
       if (key !== 'content' && key !== 'href') tag.setAttribute(key, value);
     }
@@ -29,7 +31,9 @@ function setTag(selector, attrs) {
 
 export function usePageMeta({ title, description, image, noIndex = false } = {}) {
   useEffect(() => {
-    const fullTitle = title ? `${title} — ${SITE}` : `${SITE} — go'zallik salonlariga onlayn yozilish`;
+    const fullTitle = title
+      ? `${title} — ${SITE}`
+      : `${SITE} — go'zallik salonlariga onlayn yozilish`;
     const text = description || DEFAULT_DESCRIPTION;
     const url = window.location.href;
 

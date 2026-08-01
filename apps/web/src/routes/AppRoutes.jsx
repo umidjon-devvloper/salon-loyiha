@@ -12,6 +12,10 @@ const SalonDetailPage = lazy(() => import('../pages/public/SalonDetailPage'));
 const MasterListPage = lazy(() => import('../pages/public/MasterListPage'));
 const MasterDetailPage = lazy(() => import('../pages/public/MasterDetailPage'));
 const SearchPage = lazy(() => import('../pages/public/SearchPage'));
+const OfferPage = lazy(() => import('../pages/public/LegalPage'));
+const PrivacyPage = lazy(() =>
+  import('../pages/public/LegalPage').then((m) => ({ default: m.PrivacyPage })),
+);
 const BookingPage = lazy(() => import('../pages/client/BookingPage'));
 const BookingSuccessPage = lazy(() => import('../pages/client/BookingSuccessPage'));
 const MyBookingsPage = lazy(() => import('../pages/client/MyBookingsPage'));
@@ -65,6 +69,10 @@ export function AppRoutes() {
           <Route path="/mutaxassislar" element={<MasterListPage />} />
           <Route path="/mutaxassis/:id" element={<MasterDetailPage />} />
           <Route path="/qidiruv" element={<SearchPage />} />
+
+          {/* Payme shartnomasi uchun majburiy */}
+          <Route path="/oferta" element={<OfferPage />} />
+          <Route path="/maxfiylik" element={<PrivacyPage />} />
 
           <Route path="/kirish" element={<LoginPage />} />
           <Route path="/royxatdan-otish" element={<RegisterPage />} />
