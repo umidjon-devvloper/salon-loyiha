@@ -36,6 +36,18 @@ Alohida:
 | Rasm | `<img loading="lazy">` | `expo-image` (disk kesh) |
 | To'lov | Redirect | `expo-web-browser` sessiyasi |
 
+## Salon egasi qismi — nima ilovada, nima webda
+
+| Ilovada (kunlik ish) | Faqat webda |
+|---|---|
+| Yozuvlar ro'yxati, kun bo'yicha | Ish vaqti jadvali |
+| Tasdiqlash / bekor qilish / yakunlash | Xizmat va narxlar |
+| Qo'lda yozuv | Salon profili, rasmlar |
+| | Mutaxassislar, statistika |
+
+Sabab: egasi yozuvlarni kuniga bir necha marta ko'radi — bu telefonda kerak.
+Jadvalni esa oyiga bir marta, o'tirib to'ldiradi — katta ekran qulayroq.
+
 ## Holat
 
 - [x] Expo + Router + NativeWind + monorepo
@@ -47,6 +59,6 @@ Alohida:
 - [x] Band qilish oqimi (2 qadam) + kunlar lentasi + slot grid
 - [x] Payme WebView + deep link + holat tekshiruvi
 - [x] Yozuvlarim, sevimlilar, profil, sozlamalar
-- [ ] Salon egasi: yozuvlar, tasdiqlash, qo'lda yozuv
+- [x] Salon egasi: yozuvlar, tasdiqlash, qo'lda yozuv
 - [x] Hisobni o'chirish (Apple talabi)
 - [ ] EAS build va do'konlarga chiqarish

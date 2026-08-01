@@ -60,6 +60,28 @@ export function createEndpoints(client) {
         client.patch(`/bookings/my/${id}/cancel`, { reason }).then(unwrap),
     },
 
+    /**
+     * Salon egasi kabineti.
+     *
+     * ⚠️ Mobil ilovada bu bo'limning FAQAT bir qismi ishlatiladi: yozuvlar,
+     * tasdiqlash va qo'lda yozuv. Jadval, xizmatlar va salon profili webda
+     * qoladi — egasi ularni oyiga bir marta, o'tirib to'ldiradi va katta
+     * ekran qulayroq. Yozuvlarni esa kuniga bir necha marta ko'radi.
+     */
+    owner: {
+      summary: () => client.get('/owner/summary').then(unwrap),
+      stats: () => client.get('/owner/stats').then(unwrap),
+
+      bookings: (params) => client.get('/owner/bookings', { params: clean(params) }).then(unwrap),
+      booking: (id) => client.get(`/owner/bookings/${id}`).then(unwrap),
+      setBookingStatus: (id, body) =>
+        client.patch(`/owner/bookings/${id}/status`, body).then(unwrap),
+      manualBooking: (body) => client.post('/owner/bookings/manual', body).then(unwrap),
+
+      masters: () => client.get('/owner/masters').then(unwrap),
+      services: () => client.get('/owner/services').then(unwrap),
+    },
+
     app: {
       version: () => client.get('/app/version').then(unwrap),
     },
@@ -83,6 +105,11 @@ export const queryKeys = {
   availabilityDays: (params) => ['availability-days', params],
   myBookings: (params) => ['my-bookings', params],
   myBooking: (id) => ['my-booking', id],
+
+  ownerSummary: ['owner-summary'],
+  ownerBookings: (params) => ['owner-bookings', params],
+  ownerMasters: ['owner-masters'],
+  ownerServices: ['owner-services'],
 };
 
 export default createEndpoints;
