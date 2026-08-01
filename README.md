@@ -83,23 +83,23 @@ hisoblanadi + `{ master, date, startMin }` bo'yicha unique partial index.
 ## Ishga tushirish
 
 ```bash
-pnpm install
+npm install
 
 cp apps/api/.env.example apps/api/.env   # JWT secret va ADMIN_* ni to'ldiring
 
-pnpm seed                # admin + 12 kategoriya + sozlamalar
-pnpm seed -- --demo      # + 5 salon, 12 usta, 40 xizmat, 20 yozuv (parol: demo1234)
-pnpm seed -- --reset --demo   # demo ma'lumotni qaytadan yasash
+npm run seed                # admin + 12 kategoriya + sozlamalar
+npm run seed -- --demo      # + 5 salon, 12 usta, 40 xizmat, 20 yozuv (parol: demo1234)
+npm run seed -- --reset --demo   # demo ma'lumotni qaytadan yasash
 
-pnpm dev:api             # http://localhost:5000/api/health
-pnpm dev:web             # http://localhost:5173
-pnpm test                # unit testlar
+npm run dev:api             # http://localhost:5000/api/health
+npm run dev:web             # http://localhost:5173
+npm test                 # unit testlar
 ```
 
 Seed idempotent — bir necha marta ishga tushirsa ham nusxa yaratmaydi.
 `--demo` va `--reset` production'da ishlamaydi.
 
-Talab: Node.js 20+, MongoDB 7+, pnpm 9+
+Talab: Node.js 20+, MongoDB 7+, npm 10+ (pnpm ham ishlaydi)
 
 ---
 

@@ -39,7 +39,7 @@ Web va mobil orasida **aynan bir xil** bo'ladigan kod bor: API client, tiplar, z
 
 ```
 gozal-ayol/
-├── package.json              # pnpm workspaces
+├── package.json              # npm workspaces (pnpm ham ishlaydi)
 ├── apps/
 │   ├── api/                  # Node.js backend
 │   ├── web/                  # Vite + React

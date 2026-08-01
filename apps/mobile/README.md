@@ -5,9 +5,9 @@ React Native + Expo. **Mijoz va salon egasi uchun** (admin faqat webda).
 ## Ishga tushirish
 
 ```bash
-pnpm install            # repo ildizida
+npm install            # repo ildizida
 cd apps/mobile
-pnpm start              # keyin telefonda Expo Go orqali QR skanerlanadi
+npm start              # keyin telefonda Expo Go orqali QR skanerlanadi
 ```
 
 `app.json` → `extra.apiUrl` ni lokal API'ga qarating:

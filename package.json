@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.12.3",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev:api": "pnpm --filter @gozal/api dev",
-    "dev:web": "pnpm --filter @gozal/web dev",
-    "build:web": "pnpm --filter @gozal/web build",
-    "start:api": "pnpm --filter @gozal/api start",
-    "seed": "pnpm --filter @gozal/api seed",
-    "test": "pnpm -r test",
+    "dev:api": "cd apps/api && npm run dev",
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:mobile": "cd apps/mobile && npm run start",
+    "build:web": "cd apps/web && npm run build",
+    "start:api": "cd apps/api && npm start",
+    "seed": "cd apps/api && npm run seed",
+    "test": "npm run test --workspaces --if-present",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -32,5 +32,9 @@
     "overrides": {
       "zod": "^3.23.8"
     }
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

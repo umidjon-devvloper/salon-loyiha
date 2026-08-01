@@ -26,7 +26,7 @@ apt install -y curl git nginx ufw
 # Node.js 20
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
-npm i -g pnpm pm2
+npm i -g pm2
 
 # MongoDB 7
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor -o /usr/share/keyrings/mongodb.gpg
@@ -58,7 +58,7 @@ cd /var/www/gozalayol
 
 git clone <repo-url> src
 cd src
-pnpm install --frozen-lockfile
+npm ci
 ```
 
 ### Backend
@@ -97,7 +97,7 @@ mkdir -p /var/www/gozalayol/uploads
 ln -sfn /var/www/gozalayol/src/apps/api /var/www/gozalayol/api
 
 # Boshlang'ich ma'lumot: admin + 12 kategoriya
-cd /var/www/gozalayol/src && pnpm seed
+cd /var/www/gozalayol/src && npm run seed
 ```
 
 ### Frontend
@@ -105,7 +105,7 @@ cd /var/www/gozalayol/src && pnpm seed
 ```bash
 cd /var/www/gozalayol/src/apps/web
 echo "VITE_API_URL=https://DOMEN.UZ/api" > .env.production
-pnpm build
+npm run build
 
 mkdir -p /var/www/gozalayol/web
 cp -r dist/* /var/www/gozalayol/web/
@@ -213,10 +213,10 @@ qo'yib, `pm2 restart gozalayol-api`.
 ```bash
 cd /var/www/gozalayol/src
 git pull
-pnpm install --frozen-lockfile
+npm ci
 
 # Frontend
-cd apps/web && pnpm build && cp -r dist/* /var/www/gozalayol/web/
+cd apps/web && npm run build && cp -r dist/* /var/www/gozalayol/web/
 
 # Backend
 pm2 restart gozalayol-api

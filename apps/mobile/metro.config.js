@@ -1,14 +1,20 @@
 const { getDefaultConfig } = require('expo/metro-config');
 const { withNativeWind } = require('nativewind/metro');
 const path = require('node:path');
+const { existsSync } = require('node:fs');
 
 /**
  * Monorepo sozlamasi.
  *
  * Metro standart holatda faqat o'z papkasiga qaraydi va `packages/shared`
- * ni topa olmaydi. Ikkita narsa qo'shiladi:
+ * ni topa olmaydi:
  *  - `watchFolders` — shared o'zgarganda ilova qayta yuklansin
- *  - `nodeModulesPaths` — pnpm symlink'larini yechish uchun
+ *  - `nodeModulesPaths` — ildizdagi node_modules ham ko'rinsin
+ *
+ * ⚠️ Loyiha npm va pnpm ikkalasida ham ishlaydi. Farq shundaki, npm
+ * bog'liqliklarni ildizga yassi (hoisted) qo'yadi, pnpm esa symlink bilan.
+ * `disableHierarchicalLookup` FAQAT pnpm uchun kerak — npm'da u ildizdagi
+ * paketlarni ko'rinmas qilib qo'yadi va ilova ochilmaydi.
  */
 const projectRoot = __dirname;
 const workspaceRoot = path.resolve(projectRoot, '../..');
@@ -22,8 +28,10 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
-// pnpm symlink'lar bilan ishlashi uchun
 config.resolver.unstable_enableSymlinks = true;
-config.resolver.disableHierarchicalLookup = true;
+
+// pnpm ishlatilganda: `node_modules/.pnpm` mavjudligiga qarab aniqlanadi
+const usingPnpm = existsSync(path.resolve(workspaceRoot, 'node_modules/.pnpm'));
+if (usingPnpm) config.resolver.disableHierarchicalLookup = true;
 
 module.exports = withNativeWind(config, { input: './global.css' });
