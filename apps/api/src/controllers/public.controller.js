@@ -24,6 +24,10 @@ export const masterById = asyncHandler(async (req, res) => {
   ok(res, await catalog.getMasterById(req.params.id));
 });
 
+export const settings = asyncHandler(async (req, res) => {
+  ok(res, await catalog.getPublicSettings());
+});
+
 export const search = asyncHandler(async (req, res) => {
   ok(res, await catalog.search(req.validated.query));
 });

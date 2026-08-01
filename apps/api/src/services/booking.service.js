@@ -373,7 +373,9 @@ export async function createBooking({
           accountField: env.PAYME_ACCOUNT_FIELD,
           code: booking.code,
           amountTiyin: toTiyin(payment.amount),
-          returnUrl: `${env.clientOrigins[0]}/band-qilish/tasdiq/${booking.code}`,
+          // ⚠️ Kod emas, id: qaytish sahifasi holatni `GET /bookings/my/:id`
+          // orqali tekshiradi. Brauzer qaytganiga ishonilmaydi
+          returnUrl: `${env.clientOrigins[0]}/tolov/${booking._id}`,
         });
       }
 

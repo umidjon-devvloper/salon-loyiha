@@ -21,6 +21,8 @@ export const catalogApi = {
   masters: (params) => client.get('/masters', { params: clean(params) }).then(unwrapList),
   master: (id) => client.get(`/masters/${id}`).then(unwrap),
 
+  settings: () => client.get('/settings').then(unwrap),
+
   search: (params) => client.get('/search', { params: clean(params) }).then(unwrap),
 };
 
@@ -32,6 +34,8 @@ export const catalogKeys = {
   salon: (slug) => ['salon', slug],
   masters: (params) => ['masters', params],
   master: (id) => ['master', id],
+  settings: () => client.get('/settings').then(unwrap),
+
   search: (params) => ['search', params],
 };
 

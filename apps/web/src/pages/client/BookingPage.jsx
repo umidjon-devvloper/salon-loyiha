@@ -85,6 +85,15 @@ export function BookingPage() {
   // Salonda bitta usta bo'lsa, 2-qadam ma'nosiz — o'tkazib yuboriladi
   const singleMaster = (salon?.masters?.length ?? 0) <= 1;
 
+  // To'lov summasi sozlamalardan keladi — kodda qat'iy yozilmaydi
+  const { data: publicSettings } = useQuery({
+    queryKey: ['public-settings'],
+    queryFn: catalogApi.settings,
+    staleTime: 10 * 60_000,
+  });
+
+  const fee = publicSettings?.bookingFee ?? 0;
+
   const create = useMutation({
     mutationFn: () =>
       bookingApi.create({
@@ -96,6 +105,14 @@ export function BookingPage() {
       }),
     onSuccess: (booking) => {
       queryClient.invalidateQueries({ queryKey: ['my-bookings'] });
+
+      // To'lov talab qilinsa Payme checkout sahifasiga o'tamiz.
+      // Slot shu paytdan band, lekin hold tugaguncha — 15 daqiqa.
+      if (booking.payment?.required && booking.payment.checkoutUrl) {
+        window.location.href = booking.payment.checkoutUrl;
+        return;
+      }
+
       navigate(`/band-qilish/tasdiq/${booking.code}`, { state: { booking }, replace: true });
     },
     onError: (error) => {
@@ -306,11 +323,20 @@ export function BookingPage() {
                 </span>
               </div>
               <div className="flex justify-between gap-3 border-t border-brand-50 pt-2">
-                <span className="text-gray-500">Jami</span>
-                <span className="font-semibold text-brand-700">
+                <span className="text-gray-500">Salonda to&apos;laysiz</span>
+                <span className="font-semibold text-gray-900">
                   {formatPrice(totalPrice)} · {formatDurationUz(totalDuration)}
                 </span>
               </div>
+
+              {/* To'lov summasi TASDIQDAN OLDIN ko'rinishi kerak: Payme
+                  sahifasida kutilmagan summani ko'rgan odam to'lamaydi */}
+              {fee > 0 && (
+                <div className="flex justify-between gap-3">
+                  <span className="text-gray-500">Hozir band qilish uchun</span>
+                  <span className="font-semibold text-brand-700">{formatPrice(fee)}</span>
+                </div>
+              )}
             </CardBody>
           </Card>
         </div>
@@ -345,7 +371,7 @@ export function BookingPage() {
               loading={create.isPending}
               disabled={!canSubmit}
             >
-              Band qilish
+              {fee > 0 ? 'To\u2019lash va band qilish' : 'Band qilish'}
             </Button>
           )}
         </Container>

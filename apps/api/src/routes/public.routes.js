@@ -30,6 +30,8 @@ router.get('/salons/:slug', validate({ params: slugParamSchema }), ctrl.salonByS
 router.get('/masters', validate({ query: masterListSchema }), ctrl.masters);
 router.get('/masters/:id', validate({ params: idParamSchema }), ctrl.masterById);
 
+router.get('/settings', ctrl.settings);
+
 router.get('/search', validate({ query: searchSchema }), ctrl.search);
 
 // ── Bo'sh vaqtlar ⭐ ─────────────────────────────────────────────

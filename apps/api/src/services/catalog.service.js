@@ -1,4 +1,5 @@
-import { Category, Salon, Master, Service } from '../models/index.js';
+import { Category, Salon, Master, Service, Settings } from '../models/index.js';
+import { calcBookingFee } from './bookingFee.js';
 import ApiError from '../utils/ApiError.js';
 import { SALON_STATUS, CITIES } from '../config/constants.js';
 import { paginate, searchRegex, metaOf, skipOf } from '../utils/paginate.js';
@@ -263,3 +264,23 @@ export async function listTopSalons(limit = 8) {
 }
 
 export { metaOf, skipOf, SORTS };
+
+/**
+ * Mijozga ko'rinadigan sozlamalar.
+ *
+ * Band qilish to'lovi frontendda TASDIQDAN OLDIN ko'rsatilishi kerak —
+ * Payme sahifasida kutilmagan summani ko'rgan odam to'lamaydi.
+ * Bu yerda faqat ommaviy maydonlar: ichki chegaralar va TOP narxlari emas.
+ */
+export async function getPublicSettings() {
+  const settings = await Settings.getGlobal();
+
+  return {
+    // Qat'iy tarifda summa aniq; foiz rejimida u xizmat narxiga bog'liq,
+    // shuning uchun 0 qaytadi va frontend uni ko'rsatmaydi
+    bookingFee: settings.bookingFee?.mode === 'fixed' ? calcBookingFee(settings, 0) : 0,
+    bookingFeeEnabled: Boolean(settings.bookingFee?.enabled),
+    holdMinutes: settings.holdMinutes,
+    promoText: settings.promoText || '',
+  };
+}
