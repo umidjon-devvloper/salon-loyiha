@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@gozal/shared": "workspace:*",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@tanstack/react-query": "^5.62.11",
     "axios": "^1.7.9",
     "expo": "~52.0.0",

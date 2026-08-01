@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CalendarCheck, ChevronRight, Heart, Store, User } from 'lucide-react-native';
+import { CalendarCheck, ChevronRight, Heart, Settings, Store, User } from 'lucide-react-native';
 
 import { formatPhone } from '@gozal/shared/utils/format';
 import tokens from '@gozal/shared/tokens';
@@ -66,17 +66,13 @@ export default function ProfileScreen() {
         <Row icon={Store} label="Salon kabineti" onPress={() => router.push('/kabinet')} />
       )}
 
+      <Row icon={Settings} label="Sozlamalar" onPress={() => router.push('/sozlamalar')} />
+
       <View className="mt-6">
         <Button variant="ghost" fullWidth onPress={logout}>
           Chiqish
         </Button>
       </View>
-
-      {/* ⚠️ Apple talabi: hisobni ilova ICHIDAN o'chirish imkoni bo'lishi shart,
-          aks holda ilova App Store'da rad etiladi */}
-      <Text className="mt-4 text-center text-xs text-gray-400">
-        Hisobni butunlay o&apos;chirish sozlamalarda
-      </Text>
     </ScrollView>
   );
 }

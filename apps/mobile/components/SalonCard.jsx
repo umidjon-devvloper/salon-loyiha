@@ -1,9 +1,12 @@
 import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { MapPin, Star } from 'lucide-react-native';
+import { Heart, MapPin, Star } from 'lucide-react-native';
 
+import tokens from '@gozal/shared/tokens';
 import { formatPrice } from '@gozal/shared/utils/format';
+
+import { useFavoritesStore } from '../store/favoritesStore';
 
 /**
  * Salon kartochkasi.
@@ -16,6 +19,9 @@ import { formatPrice } from '@gozal/shared/utils/format';
  */
 export function SalonCard({ salon }) {
   const router = useRouter();
+
+  const isFavorite = useFavoritesStore((s) => s.items.some((i) => i.id === salon.id));
+  const toggle = useFavoritesStore((s) => s.toggle);
 
   return (
     <Pressable
@@ -62,12 +68,29 @@ export function SalonCard({ salon }) {
             {salon.minPrice > 0 ? `${formatPrice(salon.minPrice)}dan` : 'Narx kelishilgan'}
           </Text>
 
-          {salon.reviewCount > 0 && (
-            <View className="flex-row items-center gap-1">
-              <Star size={13} color="#FBBF24" fill="#FBBF24" />
-              <Text className="text-sm text-gray-600">{salon.rating.toFixed(1)}</Text>
-            </View>
-          )}
+          <View className="flex-row items-center gap-3">
+            {salon.reviewCount > 0 && (
+              <View className="flex-row items-center gap-1">
+                <Star size={13} color="#FBBF24" fill="#FBBF24" />
+                <Text className="text-sm text-gray-600">{salon.rating.toFixed(1)}</Text>
+              </View>
+            )}
+
+            {/* Kartochka bosilganda salon ochilmasin — hitSlop bilan
+                barmoq uchun yetarli maydon beriladi */}
+            <Pressable
+              onPress={() => toggle(salon)}
+              hitSlop={10}
+              accessibilityRole="button"
+              accessibilityLabel={isFavorite ? 'Sevimlilardan olish' : 'Sevimlilarga qo\u2019shish'}
+            >
+              <Heart
+                size={18}
+                color={isFavorite ? tokens.colors.brand[500] : '#D1D5DB'}
+                fill={isFavorite ? tokens.colors.brand[500] : 'transparent'}
+              />
+            </Pressable>
+          </View>
         </View>
       </View>
     </Pressable>
